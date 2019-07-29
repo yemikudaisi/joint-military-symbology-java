@@ -1,5 +1,7 @@
 package com.github.yemikudaisi.jmsj;
 
+import java.util.HashMap;
+
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
@@ -11,6 +13,100 @@ public class JmsmlFileSystem {
 	public static final String HQTFDUMMY_FOLDER = SVG_FOLDER+"HQTFFD/";
 	public static final String AMPLIFIER_FOLDER = SVG_FOLDER+"Amplifier/";
 	public static final String ECHELON_FOLDER = SVG_FOLDER+"Echelon/";
+	public static final String NAME_DOMAIN_VALUES_FOLDER = "jmsml/name_domains_values/";
+	
+	private HashMap<SymbolSets, String> dc;
+	
+	private static final String CODED_DOMAIN_FILE_PREFIX = "Coded_Domain_";
+	private static final String CODED_DOMAIN_FILE_ENTITY_SUFFIX = "_Entities";
+	private static final String CODED_DOMAIN_FILE_MOD_ONE_SUFFIX = "_Modifier_Ones";
+	private static final String CODED_DOMAIN_FILE_MOD_TWO_SUFFIX = "_Modifier_Twos";
+	private static final String CODED_DOMAIN_FILE_AREA_ENITIES_SUFFIX = "_Area_Entities";
+	private static final String CODED_DOMAIN_FILE_LINE_ENITIES_SUFFIX = "_Line_Entities";
+	private static final String CODED_DOMAIN_FILE_POINT_ENITIES_SUFFIX = "_Point_Entities";
+	
+	public JmsmlFileSystem() {
+		initDomainCodeMapping();
+	}
+	
+	private void initDomainCodeMapping() {
+		dc = new HashMap<SymbolSets, String>();
+		dc.put(SymbolSets.Air, "Air");
+		dc.put(SymbolSets.AirMissile, "Air_Missile");
+		dc.put(SymbolSets.Space, "Space");
+		dc.put(SymbolSets.SpaceMissile, "Space_Missile");
+		dc.put(SymbolSets.LandUnits, "Land_Unit");
+		dc.put(SymbolSets.LandEquipment, "Land_Equipment");
+		dc.put(SymbolSets.LandInstallation, "Land_Installation");
+		dc.put(SymbolSets.ControlMeasure, "Control_Measure");
+		dc.put(SymbolSets.SeaSurface, "Sea_Surface");
+		dc.put(SymbolSets.SeaSubsurface, "Sea_Subsurface");
+		dc.put(SymbolSets.MineWarfare, "Mine_Warfare");
+		dc.put(SymbolSets.Activities, "Activities");
+		dc.put(SymbolSets.MeteorologicalAtmospheric, "METOC_Atmospheric,");
+		dc.put(SymbolSets.MeteorologicalOceanographic, "METOC_Oceanographic");
+		dc.put(SymbolSets.MeteorologicalSpace, "METOC_Space");
+		dc.put(SymbolSets.SignalsIntelligenceSpace, "Space_SIGINT");
+		dc.put(SymbolSets.SignalsIntelligenceAir, "Air_SIGINT");
+		dc.put(SymbolSets.SignalsIntelligenceLand, "Land_SIGINT");
+		dc.put(SymbolSets.SignalsIntelligenceSurface, "Surface_SIGINT");
+		dc.put(SymbolSets.SignalsIntelligenceSubsurface, "Subsurface_SIGINT");
+		dc.put(SymbolSets.Cyberspace, "");
+	}
+	
+	public String getEnitiesFileName(SymbolSets symbolSets) {
+		return NAME_DOMAIN_VALUES_FOLDER+
+				CODED_DOMAIN_FILE_PREFIX+
+				dc.get(symbolSets)+
+				CODED_DOMAIN_FILE_ENTITY_SUFFIX+
+				".csv";
+	}
+	
+	public String getModifierOnesFileName(SymbolSets symbolSets) {
+		return NAME_DOMAIN_VALUES_FOLDER+
+				CODED_DOMAIN_FILE_PREFIX+
+				dc.get(symbolSets)+
+				CODED_DOMAIN_FILE_MOD_ONE_SUFFIX+
+				".csv";
+	}
+	
+	public String getModifierTwosFileName(SymbolSets symbolSets) {
+		return NAME_DOMAIN_VALUES_FOLDER+
+				CODED_DOMAIN_FILE_PREFIX+
+				dc.get(symbolSets)+
+				CODED_DOMAIN_FILE_MOD_TWO_SUFFIX+
+				".csv";
+	}
+	
+	public String getAreaEnitiesFileName(SymbolSets symbolSets) {
+		return NAME_DOMAIN_VALUES_FOLDER+
+				CODED_DOMAIN_FILE_PREFIX+
+				dc.get(symbolSets)+
+				CODED_DOMAIN_FILE_AREA_ENITIES_SUFFIX+
+				".csv";
+	}
+	
+	public String getLinesEnitiesFileName(SymbolSets symbolSets) {
+		return NAME_DOMAIN_VALUES_FOLDER+
+				CODED_DOMAIN_FILE_PREFIX+
+				dc.get(symbolSets)+
+				CODED_DOMAIN_FILE_LINE_ENITIES_SUFFIX+
+				".csv";
+	}
+	
+	public String getPointEnitiesFileName(SymbolSets symbolSets) {
+		return NAME_DOMAIN_VALUES_FOLDER+
+				CODED_DOMAIN_FILE_PREFIX+
+				dc.get(symbolSets)+
+				CODED_DOMAIN_FILE_POINT_ENITIES_SUFFIX+
+				".csv";
+	}
+	
+	public void domainCodeFileExist() {
+		
+	}
+	
+
 	
 	public static String getFrameFileName(MilitarySymbol milSym) {
     	String setA = milSym.getSidcSetA();
