@@ -9,10 +9,10 @@ import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
-public class JmsmlFileSystemTests {
+public class ResourceManagerTests {
 	MilitarySymbol milSym;
 	ResourceManager fs;
-	public JmsmlFileSystemTests() {
+	public ResourceManagerTests() {
 		milSym = new MilitarySymbol(); // Set A => 1003100015
 		fs = new ResourceManager();
 	}
@@ -103,7 +103,7 @@ public class JmsmlFileSystemTests {
 	@Test
 	public void lineEntitiesFileTest() {
 		milSym.setSymbolSet(SymbolSets.ControlMeasure);
-		String fileName = fs.getLinesEnitiesFileName(milSym.getSymbolSet());
+		String fileName = fs.getLineEnitiesFileName(milSym.getSymbolSet());
 		assertEquals( ResourceManager.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Control_Measure_Line_Entities.csv",fileName);
 	}
 	

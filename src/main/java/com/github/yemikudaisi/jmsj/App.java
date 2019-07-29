@@ -25,7 +25,7 @@ public class App
     	//milSym.setHqTFDummy(HQTFDummy.TaskForce);
     	//showSymbol(milSym);
     	
-    	milSym.setSymbolSet(SymbolSets.Air);
+    	milSym.setSymbolSet(SymbolSets.MeteorologicalAtmospheric);
     	showSymbol(milSym);
     	EntityModifierHeirarchy h = MilitarySymbolFactory.build(milSym.getSymbolSet());
     	System.out.println(h);

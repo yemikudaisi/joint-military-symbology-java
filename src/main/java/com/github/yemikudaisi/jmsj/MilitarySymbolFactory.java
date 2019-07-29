@@ -14,19 +14,36 @@ import com.github.yemikudaisi.jmsj.symbology.EntityModifierHeirarchy;
 import com.github.yemikudaisi.jmsj.symbology.EntitySubType;
 import com.github.yemikudaisi.jmsj.symbology.EntityType;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
+import com.github.yemikudaisi.jmsj.symbology.Modifier;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 public class MilitarySymbolFactory
 {
-    
-    public static EntityModifierHeirarchy build(SymbolSets symbolSet) {
-    	ResourceManager fs = new ResourceManager();
-    	String filePath = fs.getEnitiesFileName(symbolSet);
+	public static EntityModifierHeirarchy build(SymbolSets symbolSet) {
+		ResourceManager fs = new ResourceManager();
+		
+    	String entitiesfilePath = fs.getEnitiesFileName(symbolSet);
+    	String areaEntitiesfilePath = fs.getAreaEnitiesFileName(symbolSet);
+    	String lineEntitiesfilePath = fs.getLineEnitiesFileName(symbolSet);
+    	String pointEntitiesfilePath = fs.getPointEnitiesFileName(symbolSet);
+    	
+    	
     	EntityModifierHeirarchy h = new EntityModifierHeirarchy(symbolSet);
+    	
+    	buildEntities(entitiesfilePath, h.getEntities());
+    	buildEntities(areaEntitiesfilePath, h.getEntities());
+    	buildEntities(lineEntitiesfilePath, h.getEntities());
+    	buildEntities(pointEntitiesfilePath, h.getEntities());
+    	
+    	addModifiers(symbolSet,h.getModifierOnes());
+    	addModifiers(symbolSet,h.getModifierTwos());
+    	return h;
+	}
+	
+    public static void buildEntities(String filePath, List<Entity> enitiesList) {   	
+
     	Entity lastEntity = null;
     	EntityType lastEntityType = null;
-    	
-    	// TODO: Add support for modifiers
     	//TODO: Consider symbols with Line, Area and Point
     	try {
     		File f = ResourceManager.getFile(filePath);
@@ -40,7 +57,7 @@ public class MilitarySymbolFactory
         	    switch(split.length) {
         	    case 1:
         	    	lastEntity = new Entity(split[0].trim(), code);
-        	    	h.getEntities().add(lastEntity);
+        	    	enitiesList.add(lastEntity);
         	    	break;
         	    case 2:
         	    	lastEntityType = new EntityType(split[1].trim(), code);
@@ -58,9 +75,21 @@ public class MilitarySymbolFactory
         	    // do something with the data
         	}
         	csvReader.close();
+        	
+        	
     	}catch(IOException e) {
-    		
+    		return;
     	}
-    	return h;
+    	catch(NullPointerException e) {
+    		return;
+    	}
+    }
+    
+    private static void addModifiers(SymbolSets set,List<Modifier> modifiersList) {
+    	try {
+    		
+    	}catch(NullPointerException e) {
+    		return;
+    	}
     }
 }

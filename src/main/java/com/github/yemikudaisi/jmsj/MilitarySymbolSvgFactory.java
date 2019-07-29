@@ -39,6 +39,7 @@ public class MilitarySymbolSvgFactory {
         	Node n = doc.importNode(frameDocument.getDocumentElement().getElementsByTagName("g").item(0), true);
         	svgRoot.appendChild(n);
         	
+        	//TODO: METOC and Cyberspace has no frame
         	if(milSym.getHqTFDummy() != HQTFDummy.NotApplicable) {
         		String hqtfdFile = App.class.getClassLoader().getResource(ResourceManager.getHqTfFileName(milSym)).getFile();
             	Document hqtfdDocument = f.createDocument(new File(hqtfdFile).toURI().toString());

@@ -55,7 +55,7 @@ public class ResourceManager {
 		dc.put(SymbolSets.Cyberspace, "");
 	}
 	
-	public String getEnitiesFileName(SymbolSets symbolSets) {
+	protected String getEnitiesFileName(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
 				dc.get(symbolSets)+
@@ -63,7 +63,7 @@ public class ResourceManager {
 				".csv";
 	}
 	
-	public String getModifierOnesFileName(SymbolSets symbolSets) {
+	protected String getModifierOnesFileName(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
 				dc.get(symbolSets)+
@@ -71,7 +71,7 @@ public class ResourceManager {
 				".csv";
 	}
 	
-	public String getModifierTwosFileName(SymbolSets symbolSets) {
+	protected String getModifierTwosFileName(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
 				dc.get(symbolSets)+
@@ -79,7 +79,7 @@ public class ResourceManager {
 				".csv";
 	}
 	
-	public String getAreaEnitiesFileName(SymbolSets symbolSets) {
+	protected String getAreaEnitiesFileName(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
 				dc.get(symbolSets)+
@@ -87,7 +87,7 @@ public class ResourceManager {
 				".csv";
 	}
 	
-	public String getLinesEnitiesFileName(SymbolSets symbolSets) {
+	protected String getLineEnitiesFileName(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
 				dc.get(symbolSets)+
@@ -95,21 +95,16 @@ public class ResourceManager {
 				".csv";
 	}
 	
-	public String getPointEnitiesFileName(SymbolSets symbolSets) {
+	protected String getPointEnitiesFileName(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
 				dc.get(symbolSets)+
 				CODED_DOMAIN_FILE_POINT_ENITIES_SUFFIX+
 				".csv";
 	}
-	
-	public void domainCodeFileExist() {
-		
-	}
-	
 
 	
-	public static String getFrameFileName(MilitarySymbol milSym) {
+	protected static String getFrameFileName(MilitarySymbol milSym) {
     	String setA = milSym.getSidcSetA();
     	char[] c = setA.toCharArray();
     	String fileName = c[2]+"_"+c[3]+c[4]+c[5]+"_"+c[6];
@@ -132,12 +127,12 @@ public class ResourceManager {
     	return fileName;    	
     }
 	
-	public static String getHqTfFileName(MilitarySymbol milSym) {
+	protected static String getHqTfFileName(MilitarySymbol milSym) {
 		char[] c = milSym.getSidcSetA().toCharArray();
 		return HQTFDUMMY_FOLDER+c[3]+c[4]+c[5]+c[7]+".svg";
 	}
 	
-	public static String getAmplifierFileName(MilitarySymbol milSym) {
+	protected static String getAmplifierFileName(MilitarySymbol milSym) {
 		char[] c = milSym.getSidcSetA().toCharArray();
 		int i = Integer.parseInt(String.valueOf(c[8]));
 		if(i>2)
@@ -146,7 +141,7 @@ public class ResourceManager {
 			return ECHELON_FOLDER+c[3]+c[8]+c[9]+".svg";
 	}
 	
-	public static File getFile(String resourcePath) {
+	protected static File getFile(String resourcePath) {
 		String s = ResourceManager.class.getClassLoader().getResource(resourcePath).getFile();
 		return new File(s);
 	}
