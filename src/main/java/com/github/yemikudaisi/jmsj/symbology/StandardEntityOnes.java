@@ -2,9 +2,9 @@
 
 public enum StandardEntityOnes
 {
-    Reality("1"),
-    Exercise("2"),
-    Simulation("3");
+    Reality("0"),
+    Exercise("1"),
+    Simulation("2");
 	
 
     private String description;
