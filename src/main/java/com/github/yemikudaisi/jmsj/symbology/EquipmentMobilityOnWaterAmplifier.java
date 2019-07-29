@@ -32,7 +32,7 @@ public enum EquipmentMobilityOnWaterAmplifier implements Amplifier  {
 
     public static EquipmentMobilityOnWaterAmplifier getEnum(String value) {
         for(EquipmentMobilityOnWaterAmplifier v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

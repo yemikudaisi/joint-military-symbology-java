@@ -32,7 +32,7 @@ public enum EquipmentMobilityOnSnowAmplifier implements Amplifier {
 
     public static EquipmentMobilityOnSnowAmplifier getEnum(String value) {
         for(EquipmentMobilityOnSnowAmplifier v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

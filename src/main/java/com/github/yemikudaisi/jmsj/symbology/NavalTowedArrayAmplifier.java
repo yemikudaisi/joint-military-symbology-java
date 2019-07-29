@@ -33,7 +33,7 @@ public enum NavalTowedArrayAmplifier implements Amplifier  {
 
     public static NavalTowedArrayAmplifier  getEnum(String value) {
         for(NavalTowedArrayAmplifier  v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

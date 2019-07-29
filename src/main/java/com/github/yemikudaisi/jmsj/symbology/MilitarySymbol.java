@@ -8,10 +8,14 @@ public class MilitarySymbol
 	private SymbolSets symbolSet = SymbolSets.LandUnits;
 	private Status status = Status.Present;
 	private HQTFDummy hqTFDummy = HQTFDummy.NotApplicable;
-	private Amplifier amplifier = BrigadeBelowEchelonAmplifier.Company;
-	String sidcSetB = "";
+	private Amplifier amplifier = NotApplicableAmplifier.Unspecified;
+	
+	private Entity entity;
+	private EntityType entityType;
+	private EntitySubType entitySubType;
 	
     public MilitarySymbol() { }
+    
     public MilitarySymbol(String version, StandardEntityOnes standardEntityOne, StandardEntityTwos standardEntityTwo, SymbolSets symbolSet, Status status, HQTFDummy hQTFDummy, Amplifier amplifier)
     {
         this.setVersion(version);
@@ -20,7 +24,10 @@ public class MilitarySymbol
         this.setSymbolSet(symbolSet);
         this.setStatus(status);
         this.setHqTFDummy(hQTFDummy);
-        this.setAmplifier(amplifier);   
+        this.setAmplifier(amplifier); 
+        this.entity = new Entity("Unspecified","000000");
+        this.entityType = new EntityType("Unspecified","000000");
+        this.entitySubType = new EntitySubType("Unspecified","000000");
     }
 
     public String getSidcSetA() { 
@@ -31,12 +38,31 @@ public class MilitarySymbol
             getStatus().getSidcPart() +
             getHqTFDummy().getSidcPart() +
             getAmplifier().getSidcPart(); 
-    	}
+	}
 
-    @Override
+    public String getSidcSetB() {
+    	String setB = entity.getIdentifier().substring(0,2)+
+    			entityType.getIdentifier().substring(2,4)+
+    			entitySubType.getIdentifier().substring(4,6);
+    	
+    	return setB;
+    }
+    public EntityType getEntityType() {
+		return entityType;
+	}
+	public void setEntityType(EntityType entityType) {
+		this.entityType = entityType;
+	}
+	public EntitySubType getEntitySubType() {
+		return entitySubType;
+	}
+	public void setEntitySubType(EntitySubType entitySubType) {
+		this.entitySubType = entitySubType;
+	}
+	@Override
     public String toString()
     {
-        return getSidcSetA()+sidcSetB;
+        return getSidcSetA()+getSidcSetB();
     }
     
 	public String getVersion() {
@@ -93,5 +119,11 @@ public class MilitarySymbol
 	
 	public void setAmplifier(Amplifier amplifier) {
 		this.amplifier = amplifier;
+	}
+	private Entity getEntity() {
+		return entity;
+	}
+	private void setEntity(Entity entity) {
+		this.entity = entity;
 	}	
 }

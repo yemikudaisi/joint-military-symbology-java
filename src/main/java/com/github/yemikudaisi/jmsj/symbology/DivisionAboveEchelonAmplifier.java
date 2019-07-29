@@ -37,7 +37,7 @@ public enum DivisionAboveEchelonAmplifier implements Amplifier {
 
     public static DivisionAboveEchelonAmplifier getEnum(String value) {
         for(DivisionAboveEchelonAmplifier v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

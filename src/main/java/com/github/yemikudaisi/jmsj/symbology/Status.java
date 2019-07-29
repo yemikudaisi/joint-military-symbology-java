@@ -38,7 +38,7 @@ public enum Status
 
     public static Status getEnum(String value) {
         for(Status v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

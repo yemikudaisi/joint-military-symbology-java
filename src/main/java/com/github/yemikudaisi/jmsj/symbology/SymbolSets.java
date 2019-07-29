@@ -55,7 +55,7 @@ public enum SymbolSets
 
     public static SymbolSets getEnum(String value) {
         for(SymbolSets v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

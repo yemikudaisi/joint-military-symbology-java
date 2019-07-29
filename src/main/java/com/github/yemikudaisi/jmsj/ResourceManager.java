@@ -1,11 +1,12 @@
 package com.github.yemikudaisi.jmsj;
 
+import java.io.File;
 import java.util.HashMap;
 
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
-public class JmsmlFileSystem {
+public class ResourceManager {
 	public static final String SVG_FOLDER = "jmsml/svg/MIL_STD_2525D_Symbols/";
 	public static final String FRAMES_FOLDER = SVG_FOLDER+"Frames/";
 	public static final String EXERCISE_FRAMES_FOLDER =FRAMES_FOLDER+"Exercise/";
@@ -25,7 +26,7 @@ public class JmsmlFileSystem {
 	private static final String CODED_DOMAIN_FILE_LINE_ENITIES_SUFFIX = "_Line_Entities";
 	private static final String CODED_DOMAIN_FILE_POINT_ENITIES_SUFFIX = "_Point_Entities";
 	
-	public JmsmlFileSystem() {
+	public ResourceManager() {
 		initDomainCodeMapping();
 	}
 	
@@ -143,6 +144,11 @@ public class JmsmlFileSystem {
 			return AMPLIFIER_FOLDER+c[3]+c[8]+c[9]+".svg";
 		else
 			return ECHELON_FOLDER+c[3]+c[8]+c[9]+".svg";
+	}
+	
+	public static File getFile(String resourcePath) {
+		String s = ResourceManager.class.getClassLoader().getResource(resourcePath).getFile();
+		return new File(s);
 	}
 
 }

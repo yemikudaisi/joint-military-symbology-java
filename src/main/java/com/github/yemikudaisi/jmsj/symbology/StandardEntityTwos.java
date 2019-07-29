@@ -39,7 +39,7 @@ public enum StandardEntityTwos
 
     public static StandardEntityTwos getEnum(String value) {
         for(StandardEntityTwos v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

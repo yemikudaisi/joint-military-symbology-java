@@ -40,7 +40,7 @@ public enum HQTFDummy
 
     public static HQTFDummy getEnum(String value) {
         for(HQTFDummy v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

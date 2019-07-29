@@ -39,7 +39,7 @@ public enum EquipmentMobilityOnLandAmplifier implements Amplifier  {
 
     public static EquipmentMobilityOnLandAmplifier getEnum(String value) {
         for(EquipmentMobilityOnLandAmplifier v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }

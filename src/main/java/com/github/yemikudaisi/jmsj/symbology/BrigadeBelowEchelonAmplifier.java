@@ -39,7 +39,7 @@ public enum BrigadeBelowEchelonAmplifier implements Amplifier {
 
     public static BrigadeBelowEchelonAmplifier  getEnum(String value) {
         for(BrigadeBelowEchelonAmplifier  v : values())
-            if(v.getDescription().equalsIgnoreCase(value)) return v;
+            if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
 }
