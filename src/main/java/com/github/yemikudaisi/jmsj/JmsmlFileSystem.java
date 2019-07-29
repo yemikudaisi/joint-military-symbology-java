@@ -43,7 +43,7 @@ public class JmsmlFileSystem {
 		dc.put(SymbolSets.SeaSubsurface, "Sea_Subsurface");
 		dc.put(SymbolSets.MineWarfare, "Mine_Warfare");
 		dc.put(SymbolSets.Activities, "Activities");
-		dc.put(SymbolSets.MeteorologicalAtmospheric, "METOC_Atmospheric,");
+		dc.put(SymbolSets.MeteorologicalAtmospheric, "METOC_Atmospheric");
 		dc.put(SymbolSets.MeteorologicalOceanographic, "METOC_Oceanographic");
 		dc.put(SymbolSets.MeteorologicalSpace, "METOC_Space");
 		dc.put(SymbolSets.SignalsIntelligenceSpace, "Space_SIGINT");

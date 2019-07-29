@@ -11,9 +11,10 @@ import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 public class JmsmlFileSystemTests {
 	MilitarySymbol milSym;
-	
+	JmsmlFileSystem fs;
 	public JmsmlFileSystemTests() {
 		milSym = new MilitarySymbol(); // Set A => 1003100015
+		fs = new JmsmlFileSystem();
 	}
 	
 	@Test
@@ -70,4 +71,46 @@ public class JmsmlFileSystemTests {
 		String fileName = JmsmlFileSystem.getHqTfFileName(milSym);
 		assertEquals(JmsmlFileSystem.HQTFDUMMY_FOLDER+"3103.svg",fileName);		
 	}
+	
+	@Test
+	public void entitiesFileTest() {
+		milSym.setSymbolSet(SymbolSets.LandUnits);
+		String fileName = fs.getEnitiesFileName(milSym.getSymbolSet());
+		assertEquals( JmsmlFileSystem.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Land_Unit_Entities.csv",fileName);
+	}
+	
+	@Test
+	public void entitiesModifierOnesTest() {
+		milSym.setSymbolSet(SymbolSets.LandUnits);
+		String fileName = fs.getModifierOnesFileName(milSym.getSymbolSet());
+		assertEquals( JmsmlFileSystem.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Land_Unit_Modifier_Ones.csv",fileName);
+	}
+	
+	@Test
+	public void entitiesModifierTwosTest() {
+		milSym.setSymbolSet(SymbolSets.LandUnits);
+		String fileName = fs.getModifierTwosFileName(milSym.getSymbolSet());
+		assertEquals( JmsmlFileSystem.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Land_Unit_Modifier_Twos.csv",fileName);
+	}
+	
+	@Test
+	public void areaEntitiesFileTest() {
+		milSym.setSymbolSet(SymbolSets.MeteorologicalAtmospheric);
+		String fileName = fs.getAreaEnitiesFileName(milSym.getSymbolSet());
+		assertEquals( JmsmlFileSystem.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_METOC_Atmospheric_Area_Entities.csv",fileName);
+	}
+	
+	@Test
+	public void lineEntitiesFileTest() {
+		milSym.setSymbolSet(SymbolSets.ControlMeasure);
+		String fileName = fs.getLinesEnitiesFileName(milSym.getSymbolSet());
+		assertEquals( JmsmlFileSystem.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Control_Measure_Line_Entities.csv",fileName);
+	}
+	
+	@Test
+	public void pointEntitiesFileTest() {
+		milSym.setSymbolSet(SymbolSets.MeteorologicalAtmospheric);
+		String fileName = fs.getPointEnitiesFileName(milSym.getSymbolSet());
+		assertEquals( JmsmlFileSystem.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_METOC_Atmospheric_Point_Entities.csv",fileName);
+		}
 }
