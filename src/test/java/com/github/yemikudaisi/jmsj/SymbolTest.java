@@ -2,15 +2,15 @@ package com.github.yemikudaisi.jmsj;
 
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-public class SymbolTest extends TestCase{
+import org.junit.Test;
+
+public class SymbolTest{
 	
-	public SymbolTest(String testName) {
-		super(testName);
-	}
 	
-	public void testSymbolSidcSetA()
+	@Test
+	public void sidcSetATest()
     {
 		MilitarySymbol milSym = new MilitarySymbol();
         assertEquals(milSym.getSidcSetA(), "1003100015");

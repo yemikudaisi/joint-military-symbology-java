@@ -1,4 +1,4 @@
-﻿package com.github.yemikudaisi.jmsj.symbology;
+package com.github.yemikudaisi.jmsj.symbology;
 
 public interface Amplifier
 {
