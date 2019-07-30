@@ -15,37 +15,38 @@ import com.github.yemikudaisi.jmsj.symbology.EntitySubType;
 import com.github.yemikudaisi.jmsj.symbology.EntityType;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.Modifier;
+import com.github.yemikudaisi.jmsj.symbology.ModifierTypes;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 public class MilitarySymbolFactory
 {
-	public static EntityModifierHeirarchy build(SymbolSets symbolSet) {
+	public static EntityModifierHeirarchy getEnityModifierHeirarchyForSymbolSet(SymbolSets symbolSet) {
 		ResourceManager fs = new ResourceManager();
 		
-    	String entitiesfilePath = fs.getEnitiesFileName(symbolSet);
-    	String areaEntitiesfilePath = fs.getAreaEnitiesFileName(symbolSet);
-    	String lineEntitiesfilePath = fs.getLineEnitiesFileName(symbolSet);
-    	String pointEntitiesfilePath = fs.getPointEnitiesFileName(symbolSet);
+    	String entitiesfilePath = fs.getEnitiesCsvResourcePath(symbolSet);
+    	String areaEntitiesfilePath = fs.getAreaEnitiesCsvResourcePath(symbolSet);
+    	String lineEntitiesfilePath = fs.getLineEnitiesCsvResourcePath(symbolSet);
+    	String pointEntitiesfilePath = fs.getPointEnitiesCsvResourcePath(symbolSet);
 
     	EntityModifierHeirarchy h = new EntityModifierHeirarchy(symbolSet);
     	
-    	buildEntities(entitiesfilePath, h.getEntities());
-    	buildEntities(areaEntitiesfilePath, h.getEntities());
-    	buildEntities(lineEntitiesfilePath, h.getEntities());
-    	buildEntities(pointEntitiesfilePath, h.getEntities());
+    	addEntitiesTree(entitiesfilePath, h.getEntities());
+    	addEntitiesTree(areaEntitiesfilePath, h.getEntities());
+    	addEntitiesTree(lineEntitiesfilePath, h.getEntities());
+    	addEntitiesTree(pointEntitiesfilePath, h.getEntities());
     	
-    	addModifiers(symbolSet,h.getModifierOnes());
-    	addModifiers(symbolSet,h.getModifierTwos());
+    	addSectorModifiers(ModifierTypes.One, symbolSet,h.getModifierOnes());
+    	addSectorModifiers(ModifierTypes.Two, symbolSet,h.getModifierTwos());
     	return h;
 	}
 	
-    public static void buildEntities(String filePath, List<Entity> enitiesList) {   	
+    public static void addEntitiesTree(String filePath, List<Entity> enitiesList) {   	
 
     	Entity lastEntity = null;
     	EntityType lastEntityType = null;
     	//TODO: Consider symbols with Line, Area and Point
     	try {
-    		File f = ResourceManager.getFile(filePath);
+    		File f = ResourceManager.getResourceFile(filePath);
         	BufferedReader csvReader = new BufferedReader(new FileReader(f));
         	String row = csvReader.readLine(); // Skip the CSV header
         	while ((row = csvReader.readLine()) != null) {
@@ -84,7 +85,7 @@ public class MilitarySymbolFactory
     	}
     }
     
-    private static void addModifiers(SymbolSets set,List<Modifier> modifiersList) {
+    private static void addSectorModifiers(ModifierTypes modifierType, SymbolSets set,List<Modifier> modifiersList) {
     	try {
     		
     	}catch(NullPointerException e) {

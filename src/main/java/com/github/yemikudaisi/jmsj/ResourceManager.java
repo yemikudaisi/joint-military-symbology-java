@@ -1,6 +1,7 @@
 package com.github.yemikudaisi.jmsj;
 
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
@@ -14,9 +15,10 @@ public class ResourceManager {
 	public static final String HQTFDUMMY_FOLDER = SVG_FOLDER+"HQTFFD/";
 	public static final String AMPLIFIER_FOLDER = SVG_FOLDER+"Amplifier/";
 	public static final String ECHELON_FOLDER = SVG_FOLDER+"Echelon/";
+	public static final String OCA_FOLDER = SVG_FOLDER+"OCA/";
 	public static final String NAME_DOMAIN_VALUES_FOLDER = "jmsml/name_domains_values/";
 	
-	private HashMap<SymbolSets, String> dc;
+	private HashMap<SymbolSets, String> symbolSetFileNameMap;
 	
 	private static final String CODED_DOMAIN_FILE_PREFIX = "Coded_Domain_";
 	private static final String CODED_DOMAIN_FILE_ENTITY_SUFFIX = "_Entities";
@@ -31,87 +33,87 @@ public class ResourceManager {
 	}
 	
 	private void initDomainCodeMapping() {
-		dc = new HashMap<SymbolSets, String>();
-		dc.put(SymbolSets.Air, "Air");
-		dc.put(SymbolSets.AirMissile, "Air_Missile");
-		dc.put(SymbolSets.Space, "Space");
-		dc.put(SymbolSets.SpaceMissile, "Space_Missile");
-		dc.put(SymbolSets.LandUnits, "Land_Unit");
-		dc.put(SymbolSets.LandEquipment, "Land_Equipment");
-		dc.put(SymbolSets.LandInstallation, "Land_Installation");
-		dc.put(SymbolSets.ControlMeasure, "Control_Measure");
-		dc.put(SymbolSets.SeaSurface, "Sea_Surface");
-		dc.put(SymbolSets.SeaSubsurface, "Sea_Subsurface");
-		dc.put(SymbolSets.MineWarfare, "Mine_Warfare");
-		dc.put(SymbolSets.Activities, "Activities");
-		dc.put(SymbolSets.MeteorologicalAtmospheric, "METOC_Atmospheric");
-		dc.put(SymbolSets.MeteorologicalOceanographic, "METOC_Oceanographic");
-		dc.put(SymbolSets.MeteorologicalSpace, "METOC_Space");
-		dc.put(SymbolSets.SignalsIntelligenceSpace, "Space_SIGINT");
-		dc.put(SymbolSets.SignalsIntelligenceAir, "Air_SIGINT");
-		dc.put(SymbolSets.SignalsIntelligenceLand, "Land_SIGINT");
-		dc.put(SymbolSets.SignalsIntelligenceSurface, "Surface_SIGINT");
-		dc.put(SymbolSets.SignalsIntelligenceSubsurface, "Subsurface_SIGINT");
-		dc.put(SymbolSets.Cyberspace, "");
+		symbolSetFileNameMap = new HashMap<SymbolSets, String>();
+		symbolSetFileNameMap.put(SymbolSets.Air, "Air");
+		symbolSetFileNameMap.put(SymbolSets.AirMissile, "Air_Missile");
+		symbolSetFileNameMap.put(SymbolSets.Space, "Space");
+		symbolSetFileNameMap.put(SymbolSets.SpaceMissile, "Space_Missile");
+		symbolSetFileNameMap.put(SymbolSets.LandUnits, "Land_Unit");
+		symbolSetFileNameMap.put(SymbolSets.LandEquipment, "Land_Equipment");
+		symbolSetFileNameMap.put(SymbolSets.LandInstallation, "Land_Installation");
+		symbolSetFileNameMap.put(SymbolSets.ControlMeasure, "Control_Measure");
+		symbolSetFileNameMap.put(SymbolSets.SeaSurface, "Sea_Surface");
+		symbolSetFileNameMap.put(SymbolSets.SeaSubsurface, "Sea_Subsurface");
+		symbolSetFileNameMap.put(SymbolSets.MineWarfare, "Mine_Warfare");
+		symbolSetFileNameMap.put(SymbolSets.Activities, "Activities");
+		symbolSetFileNameMap.put(SymbolSets.MeteorologicalAtmospheric, "METOC_Atmospheric");
+		symbolSetFileNameMap.put(SymbolSets.MeteorologicalOceanographic, "METOC_Oceanographic");
+		symbolSetFileNameMap.put(SymbolSets.MeteorologicalSpace, "METOC_Space");
+		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceSpace, "Space_SIGINT");
+		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceAir, "Air_SIGINT");
+		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceLand, "Land_SIGINT");
+		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceSurface, "Surface_SIGINT");
+		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceSubsurface, "Subsurface_SIGINT");
+		symbolSetFileNameMap.put(SymbolSets.Cyberspace, "");
 	}
 	
-	protected String getEnitiesFileName(SymbolSets symbolSets) {
+	protected String getEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				dc.get(symbolSets)+
+				symbolSetFileNameMap.get(symbolSets)+
 				CODED_DOMAIN_FILE_ENTITY_SUFFIX+
 				".csv";
 	}
 	
-	protected String getModifierOnesFileName(SymbolSets symbolSets) {
+	protected String getSectorModifierOnesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				dc.get(symbolSets)+
+				symbolSetFileNameMap.get(symbolSets)+
 				CODED_DOMAIN_FILE_MOD_ONE_SUFFIX+
 				".csv";
 	}
 	
-	protected String getModifierTwosFileName(SymbolSets symbolSets) {
+	protected String getSectorModifierTwosCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				dc.get(symbolSets)+
+				symbolSetFileNameMap.get(symbolSets)+
 				CODED_DOMAIN_FILE_MOD_TWO_SUFFIX+
 				".csv";
 	}
 	
-	protected String getAreaEnitiesFileName(SymbolSets symbolSets) {
+	protected String getAreaEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				dc.get(symbolSets)+
+				symbolSetFileNameMap.get(symbolSets)+
 				CODED_DOMAIN_FILE_AREA_ENITIES_SUFFIX+
 				".csv";
 	}
 	
-	protected String getLineEnitiesFileName(SymbolSets symbolSets) {
+	protected String getLineEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				dc.get(symbolSets)+
+				symbolSetFileNameMap.get(symbolSets)+
 				CODED_DOMAIN_FILE_LINE_ENITIES_SUFFIX+
 				".csv";
 	}
 	
-	protected String getPointEnitiesFileName(SymbolSets symbolSets) {
+	protected String getPointEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				dc.get(symbolSets)+
+				symbolSetFileNameMap.get(symbolSets)+
 				CODED_DOMAIN_FILE_POINT_ENITIES_SUFFIX+
 				".csv";
 	}
-
 	
-	protected static String getFrameFileName(MilitarySymbol milSym) {
+	protected static String getFrameSvgResourcePath(MilitarySymbol milSym) {
+		Boolean isCivEqptInst = (milSym.getSymbolSet() == SymbolSets.LandCivilian
+    			|| milSym.getSymbolSet() == SymbolSets.LandEquipment
+    			|| milSym.getSymbolSet() == SymbolSets.LandInstallation)?true:false;
     	String setA = milSym.getSidcSetA();
     	char[] c = setA.toCharArray();
-    	String fileName = c[2]+"_"+c[3]+c[4]+c[5]+"_"+c[6];
-    	if(milSym.getSymbolSet() == SymbolSets.LandCivilian
-    			|| milSym.getSymbolSet() == SymbolSets.LandEquipment
-    			|| milSym.getSymbolSet() == SymbolSets.LandInstallation) {
-    		fileName = fileName+"c";    		
+    	String fileName = c[2]+"_"+c[3]+c[4]+c[5]+"_"+(c[6]=='1'?'1':'0');
+    	if(isCivEqptInst) {
+    		fileName = fileName+"c"; 
     	}
     	
     	switch(milSym.getStandardEntityOne()) {
@@ -124,15 +126,55 @@ public class ResourceManager {
     		default:
     			fileName = FRAMES_FOLDER+fileName+".svg";
     	}
-    	return fileName;    	
+    	
+    	if(!resourceExists(fileName)) {
+			StringBuilder b = new StringBuilder(fileName);
+			if(isCivEqptInst)
+				b.setCharAt(b.length()-6, '0');
+			else
+				b.setCharAt(b.length()-5, '0');
+    		fileName = b.toString();
+		}
+    	return fileName;
     }
 	
-	protected static String getHqTfFileName(MilitarySymbol milSym) {
+	/**
+	 * Check if a resource exists given it path
+	 * @param fileName
+	 * @return
+	 */
+	private static Boolean resourceExists(String fileName) {
+		URL resource = ResourceManager.class.getResource(fileName);
+    	if(resource==null)
+    		return false;
+    	return true;  
+	}
+	
+	/**
+	 * Uses SIDC positions 4-6 and position 8 to generate a file name.
+	 * Note that Standard Entity 2 (SIDC position 4) of value 2 (Assumed Friend) 
+	 * uses HQTFD SVG symbols for value 3 (Friend) and Standard Entity 2 
+	 * (SIDC position 4) of value 5 (Suspect/Joker) uses HQTFD symbols for 
+	 * value 6 (Hostile/Faker)
+	 * 
+	 * @param milSym
+	 * @return a string representing the resource path for the symbols HQTFDummy SVG
+	 */
+	protected static String getHqTfDummySvgResourcePath(MilitarySymbol milSym) {
 		char[] c = milSym.getSidcSetA().toCharArray();
+		// NOTES: Standard Entity 2 (SIDC position 4) of value 2 (Assumed Friend) uses HQTFD SVG symbols for value 3 (Friend) and
+		// Standard Entity 2 (SIDC position 4) of value 5 (Suspect/Joker) uses HQTFD symbols for value 6 (Hostile/Faker)
+		if(c[3]=='2') {
+			c[3]='3';
+		}
+		else if(c[3]=='5') {
+			c[3]='6';
+			}
+		
 		return HQTFDUMMY_FOLDER+c[3]+c[4]+c[5]+c[7]+".svg";
 	}
 	
-	protected static String getAmplifierFileName(MilitarySymbol milSym) {
+	protected static String getAmplifierSvgResourcePath(MilitarySymbol milSym) {
 		char[] c = milSym.getSidcSetA().toCharArray();
 		int i = Integer.parseInt(String.valueOf(c[8]));
 		if(i>2)
@@ -141,9 +183,16 @@ public class ResourceManager {
 			return ECHELON_FOLDER+c[3]+c[8]+c[9]+".svg";
 	}
 	
-	protected static File getFile(String resourcePath) {
+	protected static String getStatusSvgResourcePath(MilitarySymbol milSym){
+		char[] c = milSym.getSidcSetA().toCharArray();
+		return OCA_FOLDER+c[6];
+		
+	}
+	
+	protected static File getResourceFile(String resourcePath) {
 		String s = ResourceManager.class.getClassLoader().getResource(resourcePath).getFile();
 		return new File(s);
 	}
+
 
 }

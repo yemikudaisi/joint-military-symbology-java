@@ -10,6 +10,8 @@ import com.github.yemikudaisi.jmsj.symbology.EntityModifierHeirarchy;
 import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.StandardEntityOnes;
+import com.github.yemikudaisi.jmsj.symbology.StandardEntityTwos;
+import com.github.yemikudaisi.jmsj.symbology.Status;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 /**
@@ -21,24 +23,19 @@ public class App
     public static void main( String[] args )
     {
     	MilitarySymbol milSym = new MilitarySymbol();
-    	//milSym.setAmplifier(BrigadeBelowEchelonAmplifier.Company);
-    	//milSym.setHqTFDummy(HQTFDummy.TaskForce);
-    	//showSymbol(milSym);
-    	
-    	milSym.setSymbolSet(SymbolSets.MeteorologicalAtmospheric);
+    	milSym.setStandardEntityTwo(StandardEntityTwos.AssumedFriend);
+    	milSym.setAmplifier(BrigadeBelowEchelonAmplifier.Company);
+    	milSym.setHqTFDummy(HQTFDummy.TaskForce);    	
+    	milSym.setSymbolSet(SymbolSets.Air);
+    	milSym.setStatus(Status.Planned);
     	showSymbol(milSym);
-    	EntityModifierHeirarchy h = MilitarySymbolFactory.build(milSym.getSymbolSet());
-    	System.out.println(h);
-        
+    	EntityModifierHeirarchy h = MilitarySymbolFactory.getEnityModifierHeirarchyForSymbolSet(milSym.getSymbolSet());
+    	System.out.println(h);        
     }
     
     public static void showSymbol(MilitarySymbol milSym) {
-        //milSym.setStandardEntityOne(StandardEntityOnes.Simulation);
-        //milSym.setHqTFDummy(HQTFDummy.FientDummyHeadquarters);
-        //milSym.setAmplifier(BrigadeBelowEchelonAmplifier.Battalion);
-
         JSVGCanvas c = new JSVGCanvas();
-        SVGDocument d = MilitarySymbolSvgFactory.createSvg(milSym);
+        SVGDocument d = SvgFactory.createSymbolSvg(milSym);
         c.setSVGDocument(d);
         
         JFrame f = new JFrame("svg");

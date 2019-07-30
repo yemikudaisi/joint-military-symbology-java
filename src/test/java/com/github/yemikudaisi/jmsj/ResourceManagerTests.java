@@ -20,7 +20,7 @@ public class ResourceManagerTests {
 	@Test
 	public void frameSVGFileTest() {
 		//Mapping: X_XXX_X.svg => 3_456_7.svg (SIDC)		
-		String fileName = ResourceManager.getFrameFileName(milSym);
+		String fileName = ResourceManager.getFrameSvgResourcePath(milSym);
 		assertEquals("jmsml/svg/MIL_STD_2525D_Symbols/Frames/0_310_0.svg", fileName);
 		
 	}
@@ -29,7 +29,7 @@ public class ResourceManagerTests {
 	public void frameCivilianSVGFileTest() {
 		//Mapping: X_XXX_Xc.svg => 3_456_7c.svg (SIDC)
 		milSym.setSymbolSet(SymbolSets.LandCivilian);
-		String fileName = ResourceManager.getFrameFileName(milSym);
+		String fileName = ResourceManager.getFrameSvgResourcePath(milSym);
 		assertEquals(ResourceManager.FRAMES_FOLDER+"0_311_0c.svg", fileName);
 	}
 	
@@ -37,7 +37,7 @@ public class ResourceManagerTests {
 	public void frameEquipmentSVGFileTest() {
 		//Mapping: X_XXX_Xc.svg => 3_456_7c.svg (SIDC)
 		milSym.setSymbolSet(SymbolSets.LandEquipment);
-		String fileName = ResourceManager.getFrameFileName(milSym);
+		String fileName = ResourceManager.getFrameSvgResourcePath(milSym);
 		assertEquals(ResourceManager.FRAMES_FOLDER+"0_315_0c.svg",fileName);
 	}
 	
@@ -45,7 +45,7 @@ public class ResourceManagerTests {
 	public void frameInstallationSVGFileTest() {
 		//Mapping: X_XXX_Xc.svg => 3_456_7c.svg (SIDC)
 		milSym.setSymbolSet(SymbolSets.LandInstallation);
-		String fileName = ResourceManager.getFrameFileName(milSym);
+		String fileName = ResourceManager.getFrameSvgResourcePath(milSym);
 		assertEquals(ResourceManager.FRAMES_FOLDER+"0_320_0c.svg",fileName);
 	}
 	
@@ -53,14 +53,14 @@ public class ResourceManagerTests {
 	public void amplifierSVGFileTest() {
 		//Mapping: Amplifier/XXXc.svg => Amplifier/49{10}.svg (SIDC)
 		milSym.setAmplifier(EquipmentMobilityOnLandAmplifier.PackAnimals);
-		String fileName = ResourceManager.getAmplifierFileName(milSym);
+		String fileName = ResourceManager.getAmplifierSvgResourcePath(milSym);
 		assertEquals(ResourceManager.AMPLIFIER_FOLDER+"337.svg",fileName);
 	}
 	
 	@Test
 	public void echelonSVGFileTest() {
 		//Mapping: Echelon/XXX.svg => Amplifier/49{10}.svg (SIDC)
-		String fileName = ResourceManager.getAmplifierFileName(milSym);
+		String fileName = ResourceManager.getAmplifierSvgResourcePath(milSym);
 		assertEquals(ResourceManager.ECHELON_FOLDER+"315.svg",fileName);
 	}
 	
@@ -68,49 +68,49 @@ public class ResourceManagerTests {
 	public void hqTFDummySVGFileTest() {
 		//Mapping: Echelon/XXXX.svg => Amplifier/4568.svg (SIDC)
 		milSym.setHqTFDummy(HQTFDummy.FientDummyHeadquarters);
-		String fileName = ResourceManager.getHqTfFileName(milSym);
+		String fileName = ResourceManager.getHqTfDummySvgResourcePath(milSym);
 		assertEquals(ResourceManager.HQTFDUMMY_FOLDER+"3103.svg",fileName);		
 	}
 	
 	@Test
 	public void entitiesFileTest() {
 		milSym.setSymbolSet(SymbolSets.LandUnits);
-		String fileName = fs.getEnitiesFileName(milSym.getSymbolSet());
+		String fileName = fs.getEnitiesCsvResourcePath(milSym.getSymbolSet());
 		assertEquals( ResourceManager.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Land_Unit_Entities.csv",fileName);
 	}
 	
 	@Test
 	public void entitiesModifierOnesTest() {
 		milSym.setSymbolSet(SymbolSets.LandUnits);
-		String fileName = fs.getModifierOnesFileName(milSym.getSymbolSet());
+		String fileName = fs.getSectorModifierOnesCsvResourcePath(milSym.getSymbolSet());
 		assertEquals( ResourceManager.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Land_Unit_Modifier_Ones.csv",fileName);
 	}
 	
 	@Test
 	public void entitiesModifierTwosTest() {
 		milSym.setSymbolSet(SymbolSets.LandUnits);
-		String fileName = fs.getModifierTwosFileName(milSym.getSymbolSet());
+		String fileName = fs.getSectorModifierTwosCsvResourcePath(milSym.getSymbolSet());
 		assertEquals( ResourceManager.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Land_Unit_Modifier_Twos.csv",fileName);
 	}
 	
 	@Test
 	public void areaEntitiesFileTest() {
 		milSym.setSymbolSet(SymbolSets.MeteorologicalAtmospheric);
-		String fileName = fs.getAreaEnitiesFileName(milSym.getSymbolSet());
+		String fileName = fs.getAreaEnitiesCsvResourcePath(milSym.getSymbolSet());
 		assertEquals( ResourceManager.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_METOC_Atmospheric_Area_Entities.csv",fileName);
 	}
 	
 	@Test
 	public void lineEntitiesFileTest() {
 		milSym.setSymbolSet(SymbolSets.ControlMeasure);
-		String fileName = fs.getLineEnitiesFileName(milSym.getSymbolSet());
+		String fileName = fs.getLineEnitiesCsvResourcePath(milSym.getSymbolSet());
 		assertEquals( ResourceManager.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_Control_Measure_Line_Entities.csv",fileName);
 	}
 	
 	@Test
 	public void pointEntitiesFileTest() {
 		milSym.setSymbolSet(SymbolSets.MeteorologicalAtmospheric);
-		String fileName = fs.getPointEnitiesFileName(milSym.getSymbolSet());
+		String fileName = fs.getPointEnitiesCsvResourcePath(milSym.getSymbolSet());
 		assertEquals( ResourceManager.NAME_DOMAIN_VALUES_FOLDER+"Coded_Domain_METOC_Atmospheric_Point_Entities.csv",fileName);
 		}
 }

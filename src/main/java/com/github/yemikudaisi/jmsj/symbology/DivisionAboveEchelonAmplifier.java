@@ -21,7 +21,7 @@ public enum DivisionAboveEchelonAmplifier implements Amplifier {
     }
 
     public String getDescription() {
-        return description;
+        return toString();
     }
     
     public String getSidcPart() {

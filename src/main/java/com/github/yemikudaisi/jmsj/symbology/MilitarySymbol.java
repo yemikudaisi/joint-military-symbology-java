@@ -13,8 +13,26 @@ public class MilitarySymbol
 	private Entity entity;
 	private EntityType entityType;
 	private EntitySubType entitySubType;
+	private Modifier sectorOneModifer;
+	private Modifier sectorTwoModifer;	
 	
-    public MilitarySymbol() { }
+    public Modifier getSectorOneModifer() {
+		return sectorOneModifer;
+	}
+
+	public void setSectorOneModifer(Modifier sectorOneModifer) {
+		this.sectorOneModifer = sectorOneModifer;
+	}
+
+	public Modifier getSectorTwoModifer() {
+		return sectorTwoModifer;
+	}
+
+	public void setSectorTwoModifer(Modifier sectorTwoModifer) {
+		this.sectorTwoModifer = sectorTwoModifer;
+	}
+
+	public MilitarySymbol() { }
     
     public MilitarySymbol(String version, StandardEntityOnes standardEntityOne, StandardEntityTwos standardEntityTwo, SymbolSets symbolSet, Status status, HQTFDummy hQTFDummy, Amplifier amplifier)
     {
@@ -85,7 +103,7 @@ public class MilitarySymbol
 		return standardEntityTwo;
 	}
 	
-	void setStandardEntityTwo(StandardEntityTwos standardEntityTwo) {
+	public void setStandardEntityTwo(StandardEntityTwos standardEntityTwo) {
 		this.standardEntityTwo = standardEntityTwo;
 	}
 	

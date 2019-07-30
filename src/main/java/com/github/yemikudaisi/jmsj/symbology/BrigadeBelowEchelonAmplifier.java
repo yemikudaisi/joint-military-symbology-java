@@ -23,7 +23,7 @@ public enum BrigadeBelowEchelonAmplifier implements Amplifier {
     }
 
     public String getDescription() {
-        return description;
+        return toString();
     }
     
     public String getSidcPart() {
