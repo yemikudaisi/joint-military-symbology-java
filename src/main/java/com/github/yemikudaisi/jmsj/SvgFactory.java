@@ -87,7 +87,7 @@ public class SvgFactory {
 	        	}catch(NullPointerException e) {
 	    			logger.log(Level.WARNING, "Unable to create Amplifier for "+
 	        	milSym.getSymbolSet()+
-	        	", "+milSym.getHqTFDummy()+
+	        	", "+milSym.getAmplifier()+
 	        	", "+ResourceManager.getAmplifierSvgResourcePath(milSym)
 	        	+".");
 	    		}

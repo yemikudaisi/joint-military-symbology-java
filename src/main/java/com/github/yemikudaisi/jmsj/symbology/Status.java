@@ -22,7 +22,7 @@ public enum Status
     }
 
     public String getDescription() {
-        return toString();
+        return description;
     }
     
     public String getSidcPart() {

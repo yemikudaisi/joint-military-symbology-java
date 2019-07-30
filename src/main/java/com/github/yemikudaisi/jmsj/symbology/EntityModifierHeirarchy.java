@@ -48,7 +48,7 @@ public class EntityModifierHeirarchy {
 	@Override
     public String toString() {
     	StringBuilder builder = new StringBuilder();
-    	builder.append("->"+set.getDescription());
+    	builder.append("->"+set.getDescription()+"\n");
     	for(Entity e: entities) {
     		builder.append(e.toString());
     	}

@@ -27,7 +27,7 @@ public class App
     	milSym.setAmplifier(BrigadeBelowEchelonAmplifier.Company);
     	milSym.setHqTFDummy(HQTFDummy.TaskForce);    	
     	milSym.setSymbolSet(SymbolSets.Air);
-    	milSym.setStatus(Status.Planned);
+    	milSym.setStatus(Status.PresentDamaged);
     	showSymbol(milSym);
     	EntityModifierHeirarchy h = MilitarySymbolFactory.getEnityModifierHeirarchyForSymbolSet(milSym.getSymbolSet());
     	System.out.println(h);        
