@@ -26,8 +26,7 @@ public class MilitarySymbolFactory
     	String areaEntitiesfilePath = fs.getAreaEnitiesFileName(symbolSet);
     	String lineEntitiesfilePath = fs.getLineEnitiesFileName(symbolSet);
     	String pointEntitiesfilePath = fs.getPointEnitiesFileName(symbolSet);
-    	
-    	
+
     	EntityModifierHeirarchy h = new EntityModifierHeirarchy(symbolSet);
     	
     	buildEntities(entitiesfilePath, h.getEntities());
