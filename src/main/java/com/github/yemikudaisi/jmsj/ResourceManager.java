@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.HashMap;
 
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
+import com.github.yemikudaisi.jmsj.symbology.ModifierTypes;
+import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 /**
@@ -25,15 +27,15 @@ public class ResourceManager {
 	public static final String OCA_FOLDER = SVG_FOLDER+"OCA/";
 	public static final String NAME_DOMAIN_VALUES_FOLDER = "jmsml/name_domains_values/";
 	
-	private HashMap<SymbolSets, String> symbolSetFileNameMap;
+	private HashMap<SymbolSets, String> symbolSetToFileNameMap;
 	
 	private static final String CODED_DOMAIN_FILE_PREFIX = "Coded_Domain_";
-	private static final String CODED_DOMAIN_FILE_ENTITY_SUFFIX = "_Entities";
-	private static final String CODED_DOMAIN_FILE_MOD_ONE_SUFFIX = "_Modifier_Ones";
-	private static final String CODED_DOMAIN_FILE_MOD_TWO_SUFFIX = "_Modifier_Twos";
-	private static final String CODED_DOMAIN_FILE_AREA_ENITIES_SUFFIX = "_Area_Entities";
-	private static final String CODED_DOMAIN_FILE_LINE_ENITIES_SUFFIX = "_Line_Entities";
-	private static final String CODED_DOMAIN_FILE_POINT_ENITIES_SUFFIX = "_Point_Entities";
+	private static final String CODED_DOMAIN_ENTITY_FILE_SUFFIX = "_Entities";
+	private static final String CODED_DOMAIN_AREA_ENITIES_FILE_SUFFIX = "_Area_Entities";
+	private static final String CODED_DOMAIN_LINE_ENITIES_FILE_SUFFIX = "_Line_Entities";
+	private static final String CODED_DOMAIN_POINT_ENITIES_FILE_SUFFIX = "_Point_Entities";
+	private static final String CODED_DOMAIN_MOD_ONE_FILE_SUFFIX = "_Modifier_Ones";
+	private static final String CODED_DOMAIN_MOD_TWO_FILE_SUFFIX = "_Modifier_Twos";
 	
 	public ResourceManager() {
 		initDomainCodeMapping();
@@ -44,28 +46,28 @@ public class ResourceManager {
 	 * on CSV file supplied by JMSML
 	 */
 	private void initDomainCodeMapping() {
-		symbolSetFileNameMap = new HashMap<SymbolSets, String>();
-		symbolSetFileNameMap.put(SymbolSets.Air, "Air");
-		symbolSetFileNameMap.put(SymbolSets.AirMissile, "Air_Missile");
-		symbolSetFileNameMap.put(SymbolSets.Space, "Space");
-		symbolSetFileNameMap.put(SymbolSets.SpaceMissile, "Space_Missile");
-		symbolSetFileNameMap.put(SymbolSets.LandUnits, "Land_Unit");
-		symbolSetFileNameMap.put(SymbolSets.LandEquipment, "Land_Equipment");
-		symbolSetFileNameMap.put(SymbolSets.LandInstallation, "Land_Installation");
-		symbolSetFileNameMap.put(SymbolSets.ControlMeasure, "Control_Measure");
-		symbolSetFileNameMap.put(SymbolSets.SeaSurface, "Sea_Surface");
-		symbolSetFileNameMap.put(SymbolSets.SeaSubsurface, "Sea_Subsurface");
-		symbolSetFileNameMap.put(SymbolSets.MineWarfare, "Mine_Warfare");
-		symbolSetFileNameMap.put(SymbolSets.Activities, "Activities");
-		symbolSetFileNameMap.put(SymbolSets.MeteorologicalAtmospheric, "METOC_Atmospheric");
-		symbolSetFileNameMap.put(SymbolSets.MeteorologicalOceanographic, "METOC_Oceanographic");
-		symbolSetFileNameMap.put(SymbolSets.MeteorologicalSpace, "METOC_Space");
-		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceSpace, "Space_SIGINT");
-		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceAir, "Air_SIGINT");
-		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceLand, "Land_SIGINT");
-		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceSurface, "Surface_SIGINT");
-		symbolSetFileNameMap.put(SymbolSets.SignalsIntelligenceSubsurface, "Subsurface_SIGINT");
-		symbolSetFileNameMap.put(SymbolSets.Cyberspace, "");
+		symbolSetToFileNameMap = new HashMap<SymbolSets, String>();
+		symbolSetToFileNameMap.put(SymbolSets.Air, "Air");
+		symbolSetToFileNameMap.put(SymbolSets.AirMissile, "Air_Missile");
+		symbolSetToFileNameMap.put(SymbolSets.Space, "Space");
+		symbolSetToFileNameMap.put(SymbolSets.SpaceMissile, "Space_Missile");
+		symbolSetToFileNameMap.put(SymbolSets.LandUnits, "Land_Unit");
+		symbolSetToFileNameMap.put(SymbolSets.LandEquipment, "Land_Equipment");
+		symbolSetToFileNameMap.put(SymbolSets.LandInstallation, "Land_Installation");
+		symbolSetToFileNameMap.put(SymbolSets.ControlMeasure, "Control_Measure");
+		symbolSetToFileNameMap.put(SymbolSets.SeaSurface, "Sea_Surface");
+		symbolSetToFileNameMap.put(SymbolSets.SeaSubsurface, "Sea_Subsurface");
+		symbolSetToFileNameMap.put(SymbolSets.MineWarfare, "Mine_Warfare");
+		symbolSetToFileNameMap.put(SymbolSets.Activities, "Activities");
+		symbolSetToFileNameMap.put(SymbolSets.MeteorologicalAtmospheric, "METOC_Atmospheric");
+		symbolSetToFileNameMap.put(SymbolSets.MeteorologicalOceanographic, "METOC_Oceanographic");
+		symbolSetToFileNameMap.put(SymbolSets.MeteorologicalSpace, "METOC_Space");
+		symbolSetToFileNameMap.put(SymbolSets.SignalsIntelligenceSpace, "Space_SIGINT");
+		symbolSetToFileNameMap.put(SymbolSets.SignalsIntelligenceAir, "Air_SIGINT");
+		symbolSetToFileNameMap.put(SymbolSets.SignalsIntelligenceLand, "Land_SIGINT");
+		symbolSetToFileNameMap.put(SymbolSets.SignalsIntelligenceSurface, "Surface_SIGINT");
+		symbolSetToFileNameMap.put(SymbolSets.SignalsIntelligenceSubsurface, "Subsurface_SIGINT");
+		symbolSetToFileNameMap.put(SymbolSets.Cyberspace, "Cyberspace");
 	}
 	
 	/**
@@ -77,8 +79,8 @@ public class ResourceManager {
 	protected String getEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				symbolSetFileNameMap.get(symbolSets)+
-				CODED_DOMAIN_FILE_ENTITY_SUFFIX+
+				symbolSetToFileNameMap.get(symbolSets)+
+				CODED_DOMAIN_ENTITY_FILE_SUFFIX+
 				".csv";
 	}
 	
@@ -91,8 +93,8 @@ public class ResourceManager {
 	protected String getSectorModifierOnesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				symbolSetFileNameMap.get(symbolSets)+
-				CODED_DOMAIN_FILE_MOD_ONE_SUFFIX+
+				symbolSetToFileNameMap.get(symbolSets)+
+				CODED_DOMAIN_MOD_ONE_FILE_SUFFIX+
 				".csv";
 	}
 	
@@ -105,8 +107,8 @@ public class ResourceManager {
 	protected String getSectorModifierTwosCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				symbolSetFileNameMap.get(symbolSets)+
-				CODED_DOMAIN_FILE_MOD_TWO_SUFFIX+
+				symbolSetToFileNameMap.get(symbolSets)+
+				CODED_DOMAIN_MOD_TWO_FILE_SUFFIX+
 				".csv";
 	}
 	
@@ -120,8 +122,8 @@ public class ResourceManager {
 	protected String getAreaEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				symbolSetFileNameMap.get(symbolSets)+
-				CODED_DOMAIN_FILE_AREA_ENITIES_SUFFIX+
+				symbolSetToFileNameMap.get(symbolSets)+
+				CODED_DOMAIN_AREA_ENITIES_FILE_SUFFIX+
 				".csv";
 	}
 	
@@ -135,8 +137,8 @@ public class ResourceManager {
 	protected String getLineEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				symbolSetFileNameMap.get(symbolSets)+
-				CODED_DOMAIN_FILE_LINE_ENITIES_SUFFIX+
+				symbolSetToFileNameMap.get(symbolSets)+
+				CODED_DOMAIN_LINE_ENITIES_FILE_SUFFIX+
 				".csv";
 	}
 	
@@ -150,16 +152,41 @@ public class ResourceManager {
 	protected String getPointEnitiesCsvResourcePath(SymbolSets symbolSets) {
 		return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
-				symbolSetFileNameMap.get(symbolSets)+
-				CODED_DOMAIN_FILE_POINT_ENITIES_SUFFIX+
+				symbolSetToFileNameMap.get(symbolSets)+
+				CODED_DOMAIN_POINT_ENITIES_FILE_SUFFIX+
 				".csv";
+	}
+	
+	
+	/**
+	 * Uses the symbol set-file name mapping to generate a resource path for
+	 * the CSV containing the modifiers for the supplied symbol set based on
+	 * the supplied modifier type.
+	 * @param symbolSet The symbols set whose point modifier resource path is to be generated
+	 * @param modifierType The modifier type
+	 * @return
+	 */
+	protected String getModifierCsvResourcePath(SymbolSets symbolSet, ModifierTypes modifierType) {
+		if(modifierType == ModifierTypes.One) {
+			return NAME_DOMAIN_VALUES_FOLDER+
+					CODED_DOMAIN_FILE_PREFIX+
+					symbolSetToFileNameMap.get(symbolSet)+
+					CODED_DOMAIN_MOD_ONE_FILE_SUFFIX+
+					".csv";
+		}else {
+			return NAME_DOMAIN_VALUES_FOLDER+
+					CODED_DOMAIN_FILE_PREFIX+
+					symbolSetToFileNameMap.get(symbolSet)+
+					CODED_DOMAIN_MOD_TWO_FILE_SUFFIX+
+					".csv";
+		}
 	}
 	
 	/**
 	 * Uses SIDC positions 3-7 to generate a filename (in "Frames" folder) with
 	 * an underscore between the first digit in the name and the last digit in the name. Purple filled frames for Civilian 
 	 * units, equipment, and installations have a ‘c’ at the end of the file name.
-	 * @param milSym
+	 * @param milSym The military symbols who's frame SVG resource path is to be generated
 	 * @return
 	 */
 	protected static String getFrameSvgResourcePath(MilitarySymbol milSym) {
@@ -195,6 +222,7 @@ public class ResourceManager {
     	return fileName;
     }
 	
+	
 	/**
 	 * Check if a resource exists given it path
 	 * @param fileName
@@ -211,13 +239,14 @@ public class ResourceManager {
 	 * <p>Uses SIDC positions 4-6 and position 8 (4 characters) to generate a file name
 	 * in HQTFFD folder.</p>
 	 * 
+	 * TODO: Add test cases for SIDC 4 when '2' or '5'
 	 * <p>Note that for Standard Entity 2 (SIDC position 4) of value '2' (Assumed Friend) 
 	 * uses HQTFD SVG symbols for value '3' (Friend) and Standard Entity 2 
 	 * (SIDC position 4) of value '5' (Suspect/Joker) uses HQTFD symbols for 
 	 * value '6' (Hostile/Faker) </p>
 	 * 
-	 * @param milSym
-	 * @return a string representing the resource path for the symbols HQTFDummy SVG
+	 * @param milSym The military symbols who's HQTFDummy SVG resource path is to be generated
+	 * @return A string representing the generated resource path for the symbol's HQTFDummy SVG
 	 */
 	protected static String getHqTfDummySvgResourcePath(MilitarySymbol milSym) {
 		char[] c = milSym.getSidcSetA().toCharArray();
@@ -237,13 +266,14 @@ public class ResourceManager {
 	 * <p>Generates the SVG resource path  for symbol Amplifier (Mobility/Towed Array)
 	 * in Folder: Amplifier. Uses 3 characters SIDC positions 4 and 9-10.</p>
 	 * 
+	 * TODO: Add test cases for SIDC 4 when '2' or '5'
 	 * <p>Note that for Standard Entity 2 (SIDC position 4) of value '2' (Assumed Friend) 
 	 * uses HQTFD SVG symbols for value '3' (Friend) and Standard Entity 2 
 	 * (SIDC position 4) of value '5' (Suspect/Joker) uses HQTFD symbols for 
 	 * value '6' (Hostile/Faker) </p>
 	 * 
-	 * @param milSym
-	 * @return
+	 * @param milSym The military symbols who's Amplifier SVG resource path is to be generated
+	 * @return A string representing the generated resource path for the symbol's Amplifier SVG
 	 */
 	protected static String getAmplifierSvgResourcePath(MilitarySymbol milSym) {
 		char[] c = milSym.getSidcSetA().toCharArray();
@@ -265,23 +295,30 @@ public class ResourceManager {
 	/**
 	 * <p>Uses 1 character from SIDC position 7 to generate a SVG resource for
 	 * the default version of (overlaid / or X) Status/Operational Condition 
-	 * Amplifier (OCA).</p>
+	 * Amplifier (OCA) when the symbols amplifier mode is set to Default.</p>
 	 * 
-	 * <p>Note that for Standard Entity 2 (SIDC position 4) of value '2' (Assumed Friend) 
-	 * uses HQTFD SVG symbols for value '3' (Friend) and Standard Entity 2 
-	 * (SIDC position 4) of value '5' (Suspect/Joker) uses HQTFD symbols for 
-	 * value '6' (Hostile/Faker) </p>
+	 * <p>When the symbols amplifier mode is set to Alternate it produces an 
+	 * optional version (colored bars) which Uses SIDC positions 3-7 along 
+	 * with an additional value of 2 at the end</p>
 	 * 
-	 * @param milSym
-	 * @return
+	 * @param milSym The military symbols who's status SVG resource path is to be generated
+	 * @return A string representing the generated resource path for the symbol's 
+	 * Status\Operation Condition Amplifier SVG
 	 */
 	protected static String getStatusSvgResourcePath(MilitarySymbol milSym){
 		char[] c = milSym.getSidcSetA().toCharArray();
-		
-		return OCA_FOLDER+c[6]+".svg";
+		if(milSym.getStatusAmplifierMode() == StatusAmplifierModes.Default) {
+			return OCA_FOLDER+c[6]+".svg";
+		}
+		return OCA_FOLDER+c[2]+c[3]+c[4]+c[6]+"2.svg";
 		
 	}
 	
+	/**
+	 * Get's the file at the supplied resource path
+	 * @param resourcePath The path to a resource file
+	 * @return The file the supplied path was referencing
+	 */
 	protected static File getResourceFile(String resourcePath) {
 		String s = ResourceManager.class.getClassLoader().getResource(resourcePath).getFile();
 		return new File(s);

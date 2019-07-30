@@ -28,9 +28,10 @@ public class App
     	milSym.setHqTFDummy(HQTFDummy.TaskForce);    	
     	milSym.setSymbolSet(SymbolSets.Air);
     	milSym.setStatus(Status.PresentDamaged);
-    	showSymbol(milSym);
     	EntityModifierHeirarchy h = MilitarySymbolFactory.getEnityModifierHeirarchyForSymbolSet(milSym.getSymbolSet());
-    	System.out.println(h);        
+    	System.out.println(h);
+
+    	showSymbol(milSym);
     }
     
     public static void showSymbol(MilitarySymbol milSym) {

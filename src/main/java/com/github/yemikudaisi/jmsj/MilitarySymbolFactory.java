@@ -2,12 +2,17 @@ package com.github.yemikudaisi.jmsj;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.github.yemikudaisi.jmsj.symbology.Entity;
 import com.github.yemikudaisi.jmsj.symbology.EntityModifierHeirarchy;
@@ -20,13 +25,14 @@ import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 public class MilitarySymbolFactory
 {
+	static Logger logger = Logger.getLogger(SvgFactory.class.getName());
 	public static EntityModifierHeirarchy getEnityModifierHeirarchyForSymbolSet(SymbolSets symbolSet) {
-		ResourceManager fs = new ResourceManager();
+		ResourceManager resourceManager = new ResourceManager();
 		
-    	String entitiesfilePath = fs.getEnitiesCsvResourcePath(symbolSet);
-    	String areaEntitiesfilePath = fs.getAreaEnitiesCsvResourcePath(symbolSet);
-    	String lineEntitiesfilePath = fs.getLineEnitiesCsvResourcePath(symbolSet);
-    	String pointEntitiesfilePath = fs.getPointEnitiesCsvResourcePath(symbolSet);
+    	String entitiesfilePath = resourceManager.getEnitiesCsvResourcePath(symbolSet);
+    	String areaEntitiesfilePath = resourceManager.getAreaEnitiesCsvResourcePath(symbolSet);
+    	String lineEntitiesfilePath = resourceManager.getLineEnitiesCsvResourcePath(symbolSet);
+    	String pointEntitiesfilePath = resourceManager.getPointEnitiesCsvResourcePath(symbolSet);
 
     	EntityModifierHeirarchy h = new EntityModifierHeirarchy(symbolSet);
     	
@@ -35,8 +41,8 @@ public class MilitarySymbolFactory
     	addEntitiesTree(lineEntitiesfilePath, h.getEntities());
     	addEntitiesTree(pointEntitiesfilePath, h.getEntities());
     	
-    	addSectorModifiers(ModifierTypes.One, symbolSet,h.getModifierOnes());
-    	addSectorModifiers(ModifierTypes.Two, symbolSet,h.getModifierTwos());
+    	addSectorModifiers(ModifierTypes.One, symbolSet,h.getSectorModifierOnes());
+    	addSectorModifiers(ModifierTypes.Two, symbolSet,h.getSectorModifierTwos());
     	return h;
 	}
 	
@@ -44,7 +50,8 @@ public class MilitarySymbolFactory
 
     	Entity lastEntity = null;
     	EntityType lastEntityType = null;
-    	//TODO: Consider symbols with Line, Area and Point
+    	
+    	//TODO: Consider symbols with special entity category(Line, Area and Point)
     	try {
     		File f = ResourceManager.getResourceFile(filePath);
         	BufferedReader csvReader = new BufferedReader(new FileReader(f));
@@ -77,19 +84,35 @@ public class MilitarySymbolFactory
         	csvReader.close();
         	
         	
-    	}catch(IOException e) {
-    		return;
-    	}
-    	catch(NullPointerException e) {
+    	}catch(Exception e) {
+    		String name = Paths.get(filePath).getFileName().toString();
+    		name = name.substring(0,name.length()-4);
+    		name = name.replace('_', ' ');
+    		name = name.substring(13,name.length());
+    				
+    		logger.log(Level.INFO, "Unable to build enities for "+name);
     		return;
     	}
     }
     
     private static void addSectorModifiers(ModifierTypes modifierType, SymbolSets set,List<Modifier> modifiersList) {
+    	
+    	ResourceManager resourceManager = new ResourceManager();
     	try {
-    		
-    	}catch(NullPointerException e) {
+    		String path = resourceManager.getModifierCsvResourcePath(set, modifierType);
+    		File f = ResourceManager.getResourceFile(path);
+        	BufferedReader csvReader = new BufferedReader(new FileReader(f));
+        	String row = csvReader.readLine(); // Skip the CSV header
+        	while ((row = csvReader.readLine()) != null) {
+        	    String[] data = row.split(",");
+        	    String name = data[0].trim();
+        	    String code = data[1].trim();
+        	    modifiersList.add(new Modifier(name, code));
+        	}
+        	csvReader.close();
+    	}catch(Exception e) {
+    		logger.log(Level.INFO, "Unable to build sector modifiers("+modifierType.toString()+") for "+set);
     		return;
-    	}
+    	} 
     }
 }

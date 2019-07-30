@@ -24,7 +24,7 @@ public class Entity extends DomainCoded
 	@Override
     public String toString() {
     	StringBuilder builder = new StringBuilder();
-    	builder.append("--->"+getName()+"\n");
+    	builder.append("--->"+getName()+" - "+getIdentifier()+"\n");
     	for(EntityType t: types) {
     		builder.append(t.toString());
     	}

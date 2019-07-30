@@ -79,17 +79,17 @@ public class SvgFactory {
         	// Amplifiers assembly
         	// Only caters for status damage and broken, frame affecting statuses handled in frame assemble above
         	if(!(milSym.getAmplifier() instanceof NotApplicableAmplifier)) {
-        		try {
-        			String file = App.class.getClassLoader().getResource(ResourceManager.getAmplifierSvgResourcePath(milSym)).getFile();
-                	Document amplifierDocument = f.createDocument(new File(file).toURI().toString());
-                	Node n = doc.importNode(amplifierDocument.getDocumentElement().getElementsByTagName("g").item(0), true);
-                	svgRoot.appendChild(n);
+	    		try {
+	    			String file = App.class.getClassLoader().getResource(ResourceManager.getAmplifierSvgResourcePath(milSym)).getFile();
+	            	Document amplifierDocument = f.createDocument(new File(file).toURI().toString());
+	            	Node n = doc.importNode(amplifierDocument.getDocumentElement().getElementsByTagName("g").item(0), true);
+	            	svgRoot.appendChild(n);
 	        	}catch(NullPointerException e) {
 	    			logger.log(Level.WARNING, "Unable to create Amplifier for "+
-	        	milSym.getSymbolSet()+
-	        	", "+milSym.getAmplifier()+
-	        	", "+ResourceManager.getAmplifierSvgResourcePath(milSym)
-	        	+".");
+			        	milSym.getSymbolSet()+
+			        	", "+milSym.getAmplifier()+
+			        	", "+ResourceManager.getAmplifierSvgResourcePath(milSym)
+			        	+".");
 	    		}
         		
         	}        	

@@ -6,31 +6,31 @@ import java.util.List;
 public class EntityModifierHeirarchy {
 	private List<Entity> entities;
 	private SymbolSets set;
-	private List<Modifier> modifierOnes;
-	private List<Modifier> modifierTwos;
+	private List<Modifier> sectorModifierOnes;
+	private List<Modifier> sectorModifierTwos;
 	
 	
 	public EntityModifierHeirarchy(SymbolSets set) {
 		entities = new ArrayList<Entity>();
-		modifierOnes = new ArrayList<Modifier>();
-		modifierTwos = new ArrayList<Modifier>();
+		sectorModifierOnes = new ArrayList<Modifier>();
+		sectorModifierTwos = new ArrayList<Modifier>();
 		this.set = set;
 	}
 
-	public List<Modifier> getModifierOnes() {
-		return modifierOnes;
+	public List<Modifier> getSectorModifierOnes() {
+		return sectorModifierOnes;
 	}
 
-	public void setModifierOnes(List<Modifier> modifierOnes) {
-		this.modifierOnes = modifierOnes;
+	public void setSectorModifierOnes(List<Modifier> modifierOnes) {
+		this.sectorModifierOnes = modifierOnes;
 	}
 
-	public List<Modifier> getModifierTwos() {
-		return modifierTwos;
+	public List<Modifier> getSectorModifierTwos() {
+		return sectorModifierTwos;
 	}
 
-	public void setModifierTwos(List<Modifier> modifierTwos) {
-		this.modifierTwos = modifierTwos;
+	public void setSectorModifierTwos(List<Modifier> modifierTwos) {
+		this.sectorModifierTwos = modifierTwos;
 	}
 
 	public SymbolSets getSet() {
@@ -49,7 +49,18 @@ public class EntityModifierHeirarchy {
     public String toString() {
     	StringBuilder builder = new StringBuilder();
     	builder.append("->"+set.getDescription()+"\n");
+    	builder.append("# Entities -> Types -> Subtypes: \n");
     	for(Entity e: entities) {
+    		builder.append(e.toString());
+    	}
+    	
+    	builder.append("# Modifier One: \n");
+    	for (Modifier e: sectorModifierOnes) {
+    		builder.append(e.toString());
+    	}
+    	
+    	builder.append("# Modifier Two: \n");
+    	for (Modifier e: sectorModifierTwos) {
     		builder.append(e.toString());
     	}
     	return builder.toString();

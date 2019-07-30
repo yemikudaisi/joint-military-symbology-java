@@ -8,6 +8,6 @@ public class EntitySubType extends DomainCoded{
     
     @Override
     public String toString() {
-    	return "-------->"+getName()+"\n";
+    	return "-------->"+getName()+" - "+getIdentifier()+"\n";
     }
 }

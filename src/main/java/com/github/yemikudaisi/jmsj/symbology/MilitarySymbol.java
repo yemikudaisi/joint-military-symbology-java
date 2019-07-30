@@ -14,9 +14,18 @@ public class MilitarySymbol
 	private EntityType entityType;
 	private EntitySubType entitySubType;
 	private Modifier sectorOneModifer;
-	private Modifier sectorTwoModifer;	
+	private Modifier sectorTwoModifer;
+	private StatusAmplifierModes statusAmplifierMode = StatusAmplifierModes.Default;
 	
-    public Modifier getSectorOneModifer() {
+    public StatusAmplifierModes getStatusAmplifierMode() {
+		return statusAmplifierMode;
+	}
+
+	public void setStatusAmplifierMode(StatusAmplifierModes statusAmplifierMode) {
+		this.statusAmplifierMode = statusAmplifierMode;
+	}
+
+	public Modifier getSectorOneModifer() {
 		return sectorOneModifer;
 	}
 
@@ -32,7 +41,12 @@ public class MilitarySymbol
 		this.sectorTwoModifer = sectorTwoModifer;
 	}
 
-	public MilitarySymbol() { }
+	public MilitarySymbol() {
+
+        this.entity = new Entity("Unspecified","000000");
+        this.entityType = new EntityType("Unspecified","000000");
+        this.entitySubType = new EntitySubType("Unspecified","000000");
+	}
     
     public MilitarySymbol(String version, StandardEntityOnes standardEntityOne, StandardEntityTwos standardEntityTwo, SymbolSets symbolSet, Status status, HQTFDummy hQTFDummy, Amplifier amplifier)
     {
@@ -43,9 +57,30 @@ public class MilitarySymbol
         this.setStatus(status);
         this.setHqTFDummy(hQTFDummy);
         this.setAmplifier(amplifier); 
-        this.entity = new Entity("Unspecified","000000");
-        this.entityType = new EntityType("Unspecified","000000");
-        this.entitySubType = new EntitySubType("Unspecified","000000");
+    }
+    
+    public MilitarySymbol(
+    		String version, 
+    		StandardEntityOnes standardEntityOne, 
+    		StandardEntityTwos standardEntityTwo, 
+    		SymbolSets symbolSet, 
+    		Status status, 
+    		HQTFDummy hQTFDummy, 
+    		Amplifier amplifier,
+    		Entity entity,
+    		EntityType entityType,
+    		EntitySubType entitySubType)
+    {
+        this.setVersion(version);
+        this.setStandardEntityOne(standardEntityOne);
+        this.setStandardEntityTwo(standardEntityTwo);
+        this.setSymbolSet(symbolSet);
+        this.setStatus(status);
+        this.setHqTFDummy(hQTFDummy);
+        this.setAmplifier(amplifier); 
+        this.entity = entity;
+        this.entityType = entityType;
+        this.entitySubType = entitySubType;
     }
 
     public String getSidcSetA() { 
