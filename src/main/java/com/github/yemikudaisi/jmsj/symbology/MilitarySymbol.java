@@ -43,9 +43,9 @@ public class MilitarySymbol
 
 	public MilitarySymbol() {
 
-        this.entity = new Entity("Unspecified","000000");
-        this.entityType = new EntityType("Unspecified","000000");
-        this.entitySubType = new EntitySubType("Unspecified","000000");
+        this.entity = new Entity("Unspecified","120000");
+        this.entityType = new EntityType("Unspecified","120500");
+        this.entitySubType = new EntitySubType("Unspecified","120501");
 	}
     
     public MilitarySymbol(String version, StandardEntityOnes standardEntityOne, StandardEntityTwos standardEntityTwo, SymbolSets symbolSet, Status status, HQTFDummy hQTFDummy, Amplifier amplifier)
@@ -78,9 +78,9 @@ public class MilitarySymbol
         this.setStatus(status);
         this.setHqTFDummy(hQTFDummy);
         this.setAmplifier(amplifier); 
-        this.entity = entity;
-        this.entityType = entityType;
-        this.entitySubType = entitySubType;
+        this.setEntity(entity);
+        this.setEntityType(entityType);
+        this.setEntitySubType(entitySubType);
     }
 
     public String getSidcSetA() { 
@@ -94,24 +94,29 @@ public class MilitarySymbol
 	}
 
     public String getSidcSetB() {
-    	String setB = entity.getIdentifier().substring(0,2)+
-    			entityType.getIdentifier().substring(2,4)+
-    			entitySubType.getIdentifier().substring(4,6);
+    	String setB = getEntity().getIdentifier().substring(0,2)+
+    			getEntityType().getIdentifier().substring(2,4)+
+    			getEntitySubType().getIdentifier().substring(4,6);
     	
     	return setB;
     }
+    
     public EntityType getEntityType() {
 		return entityType;
 	}
-	public void setEntityType(EntityType entityType) {
+    
+	public void setEntityType(EntityType entityType){
 		this.entityType = entityType;
 	}
+	
 	public EntitySubType getEntitySubType() {
 		return entitySubType;
 	}
+	
 	public void setEntitySubType(EntitySubType entitySubType) {
 		this.entitySubType = entitySubType;
 	}
+	
 	@Override
     public String toString()
     {

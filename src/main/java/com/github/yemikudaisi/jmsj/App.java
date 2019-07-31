@@ -9,7 +9,6 @@ import com.github.yemikudaisi.jmsj.symbology.BrigadeBelowEchelonAmplifier;
 import com.github.yemikudaisi.jmsj.symbology.EntityModifierHeirarchy;
 import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
-import com.github.yemikudaisi.jmsj.symbology.StandardEntityOnes;
 import com.github.yemikudaisi.jmsj.symbology.StandardEntityTwos;
 import com.github.yemikudaisi.jmsj.symbology.Status;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
@@ -25,12 +24,14 @@ public class App
     	MilitarySymbol milSym = new MilitarySymbol();
     	milSym.setStandardEntityTwo(StandardEntityTwos.AssumedFriend);
     	milSym.setAmplifier(BrigadeBelowEchelonAmplifier.Company);
-    	milSym.setHqTFDummy(HQTFDummy.TaskForce);    	
-    	milSym.setSymbolSet(SymbolSets.Air);
-    	milSym.setStatus(Status.PresentDamaged);
+    	milSym.setHqTFDummy(HQTFDummy.Headquarters);    	
+    	//milSym.setSymbolSet(SymbolSets.Air);
+    	milSym.setSymbolSet(SymbolSets.LandUnits);
+    	milSym.setStatus(Status.PresentDestroyed);
     	EntityModifierHeirarchy h = MilitarySymbolFactory.getEnityModifierHeirarchyForSymbolSet(milSym.getSymbolSet());
     	System.out.println(h);
 
+    	System.out.println("SIDC: "+milSym);
     	showSymbol(milSym);
     }
     

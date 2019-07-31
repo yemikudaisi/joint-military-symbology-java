@@ -12,6 +12,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
 
 import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
@@ -31,8 +32,8 @@ public class SvgFactory {
         	
         	DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
         	String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-        	Document doc = impl.createDocument(svgNS, "svg", null);
-        	Element svgRoot = doc.getDocumentElement();
+        	Document newSvgDocument = impl.createDocument(svgNS, "svg", null);
+        	Element svgRoot = newSvgDocument.getDocumentElement();
         	
         	//TODO: Figure out the height and width of the tallest and widest
 
@@ -40,7 +41,7 @@ public class SvgFactory {
         	svgRoot.setAttributeNS(null, "height", "1000");
         	
         	//TODO:METOC and Cyberspace has no frame
-        	// FIXME: Hard-coded, make more flexible
+        	//FIXME: Hard-coded, make more flexible
         	
         	// Symbol Set Frame (Including projected Status)
         	if(milSym.getSymbolSet() != SymbolSets.MeteorologicalAtmospheric ||
@@ -48,10 +49,9 @@ public class SvgFactory {
         			milSym.getSymbolSet() != SymbolSets.MeteorologicalSpace ||
         			milSym.getSymbolSet() != SymbolSets.Cyberspace) {
         		try {
-        			String frameFile = App.class.getClassLoader().getResource(ResourceManager.getFrameSvgResourcePath(milSym)).getFile();
-                	Document frameDocument = f.createDocument(new File(frameFile).toURI().toString());
-                	Node n = doc.importNode(frameDocument.getDocumentElement().getElementsByTagName("g").item(0), true);
-                	svgRoot.appendChild(n);
+        			String file = App.class.getClassLoader().getResource(ResourceManager.getFrameSvgResourcePath(milSym)).getFile();
+        			Document document = f.createDocument(new File(file).toURI().toString());
+        			appendDocument(newSvgDocument, svgRoot, document);
         			
         		}catch(NullPointerException e) {
         			logger.log(Level.WARNING, "Unable to create frame SVG for "+
@@ -64,10 +64,10 @@ public class SvgFactory {
         	// HQTFDummy assembly
         	if(milSym.getHqTFDummy() != HQTFDummy.NotApplicable) {
         		try {
-	        		String hqtfdFile = App.class.getClassLoader().getResource(ResourceManager.getHqTfDummySvgResourcePath(milSym)).getFile();
-	            	Document hqtfdDocument = f.createDocument(new File(hqtfdFile).toURI().toString());
-	            	Node n = doc.importNode(hqtfdDocument.getDocumentElement().getElementsByTagName("g").item(0), true);
-	            	svgRoot.appendChild(n);
+	        		String file = App.class.getClassLoader().getResource(ResourceManager.getHqTfDummySvgResourcePath(milSym)).getFile();
+	        		Document document = f.createDocument(new File(file).toURI().toString());
+	            	NodeList nL = document.getDocumentElement().getChildNodes();
+	            	appendDocument(newSvgDocument, svgRoot, document);
 	        	}catch(NullPointerException e) {
 	    			logger.log(Level.WARNING, "Unable to create HQ TF Dummy SVG for "+ milSym.getSymbolSet()+
 	    					", "+milSym.getHqTFDummy()+
@@ -76,14 +76,13 @@ public class SvgFactory {
 	    		}
         	}
         	
-        	// Amplifiers assembly
+        	// Amplifiers, SIDC position 
         	// Only caters for status damage and broken, frame affecting statuses handled in frame assemble above
         	if(!(milSym.getAmplifier() instanceof NotApplicableAmplifier)) {
 	    		try {
 	    			String file = App.class.getClassLoader().getResource(ResourceManager.getAmplifierSvgResourcePath(milSym)).getFile();
-	            	Document amplifierDocument = f.createDocument(new File(file).toURI().toString());
-	            	Node n = doc.importNode(amplifierDocument.getDocumentElement().getElementsByTagName("g").item(0), true);
-	            	svgRoot.appendChild(n);
+	    			Document document = f.createDocument(new File(file).toURI().toString());
+	    			appendDocument(newSvgDocument, svgRoot, document);
 	        	}catch(NullPointerException e) {
 	    			logger.log(Level.WARNING, "Unable to create Amplifier for "+
 			        	milSym.getSymbolSet()+
@@ -92,15 +91,15 @@ public class SvgFactory {
 			        	+".");
 	    		}
         		
-        	}        	
+        	}
         	
         	// Status\Operational Condition Amplifier
+        	// Only caters for status damage and broken, frame affecting statuses handled in frame assembled above
         	if(milSym.getStatus() == Status.PresentDamaged || milSym.getStatus() == Status.PresentDestroyed) {
         		try {
         			String file = App.class.getClassLoader().getResource(ResourceManager.getStatusSvgResourcePath(milSym)).getFile();
-                	Document document = f.createDocument(new File(file).toURI().toString());
-                	Node n = doc.importNode(document.getDocumentElement().getElementsByTagName("g").item(0), true);
-                	svgRoot.appendChild(n);
+        			Document document = f.createDocument(new File(file).toURI().toString());
+        			appendDocument(newSvgDocument, svgRoot, document);
 	        	}catch(NullPointerException e) {
 	    			logger.log(Level.WARNING, "Unable to create Status for "+
 	        	milSym.getSymbolSet()+
@@ -108,12 +107,49 @@ public class SvgFactory {
 	        	", "+ResourceManager.getStatusSvgResourcePath(milSym)
 	        	+".");
 	    		}
+        	}        	
+
+        	
+        	// Entities assembly, SIDC position 11-16
+        	if(true) {
+	    		try {
+	    			String file = App.class.getClassLoader().getResource(ResourceManager.getEntitySvgResourcePath(milSym)).getFile();
+	            	Document document = f.createDocument(new File(file).toURI().toString());
+	            	appendDocument(newSvgDocument, svgRoot, document);
+	        	}catch(NullPointerException e) {
+	    			logger.log(Level.WARNING, "Unable to create >>>> main icon for "+
+			        	milSym.getSymbolSet()+
+			        	", "+milSym.getAmplifier()+
+			        	", "+ResourceManager.getAmplifierSvgResourcePath(milSym)
+			        	+".");
+	    		}
+        		
         	}
         	
-        	return (SVGDocument) doc;
+        	return (SVGDocument) newSvgDocument;
     	}catch(IOException e) {
     		System.out.println(e.getMessage());
     	}
     	return null;
 	}
+	
+	private static void appendDocument(Document parent, Node root, Document child) {
+    	//Node n = doc.importNode(document.getDocumentElement().getElementsByTagName("g").item(0), true);
+    	//NodeList nL = document.getDocumentElement().getElementsByTagName("g");
+		NodeList nL = child.getDocumentElement().getChildNodes();
+    	for(int i =0; i<nL.getLength(); i++) {
+    		Node n = nL.item(i);
+    		
+    		if(n.getNodeType() == Node.ELEMENT_NODE ) {
+    			Element e = (Element)n;
+        		String display = e.getAttribute("display");
+        		//Node p = n.get
+        		if(!display.equalsIgnoreCase("none")) {
+        			Node t = parent.importNode(n, true);
+	            	root.appendChild(t);
+        		}	
+    		}
+    	}
+	}
+	
 }

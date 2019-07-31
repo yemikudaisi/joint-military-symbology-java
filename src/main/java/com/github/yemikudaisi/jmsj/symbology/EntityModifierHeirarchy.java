@@ -54,7 +54,7 @@ public class EntityModifierHeirarchy {
     		builder.append(e.toString());
     	}
     	
-    	builder.append("# Modifier One: \n");
+    	builder.append("\n# Modifier One: \n");
     	for (Modifier e: sectorModifierOnes) {
     		builder.append(e.toString());
     	}

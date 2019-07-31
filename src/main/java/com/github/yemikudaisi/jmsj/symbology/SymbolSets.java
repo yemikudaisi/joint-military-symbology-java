@@ -39,7 +39,7 @@ public enum SymbolSets
     }
 
     public String getDescription() {
-        return toString();
+        return description;
     }
     
     public String getSidcPart() {
