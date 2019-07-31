@@ -11,6 +11,7 @@ import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.StandardEntityTwos;
 import com.github.yemikudaisi.jmsj.symbology.Status;
+import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 /**
@@ -24,7 +25,8 @@ public class App
     	MilitarySymbol milSym = new MilitarySymbol();
     	milSym.setStandardEntityTwo(StandardEntityTwos.AssumedFriend);
     	milSym.setAmplifier(BrigadeBelowEchelonAmplifier.Company);
-    	milSym.setHqTFDummy(HQTFDummy.Headquarters);    	
+    	milSym.setHqTFDummy(HQTFDummy.Headquarters);
+    	milSym.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
     	//milSym.setSymbolSet(SymbolSets.Air);
     	milSym.setSymbolSet(SymbolSets.LandUnits);
     	milSym.setStatus(Status.PresentDestroyed);

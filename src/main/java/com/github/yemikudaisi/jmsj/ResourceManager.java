@@ -399,7 +399,13 @@ public class ResourceManager {
 		if(milSym.getStatusAmplifierMode() == StatusAmplifierModes.Default) {
 			return OCA_FOLDER+c[6]+".svg";
 		}
-		return OCA_FOLDER+c[2]+c[3]+c[4]+c[6]+"2.svg";
+		if(c[3]=='2') {
+			c[3]='3';
+		}
+		else if(c[3]=='5') {
+			c[3]='6';
+		}
+		return OCA_FOLDER+c[2]+c[3]+c[4]+c[5]+c[6]+"2.svg";
 		
 	}
 	
