@@ -181,7 +181,7 @@ public class MilitarySymbol
 	private Entity getEntity() {
 		return entity;
 	}
-	private void setEntity(Entity entity) {
+	public void setEntity(Entity entity) {
 		this.entity = entity;
 	}	
 }

@@ -43,6 +43,7 @@ public class MilitarySymbolFactory
     	
     	addSectorModifiers(ModifierTypes.One, symbolSet,h.getSectorModifierOnes());
     	addSectorModifiers(ModifierTypes.Two, symbolSet,h.getSectorModifierTwos());
+    	
     	return h;
 	}
 	
@@ -53,9 +54,11 @@ public class MilitarySymbolFactory
     	
     	//TODO: Consider symbols with special entity category(Line, Area and Point)
     	try {
+    		
     		File f = ResourceManager.getResourceFile(filePath);
         	BufferedReader csvReader = new BufferedReader(new FileReader(f));
         	String row = csvReader.readLine(); // Skip the CSV header
+        	
         	while ((row = csvReader.readLine()) != null) {
         	    String[] data = row.split(",");
         	    String name = data[0];
@@ -79,7 +82,6 @@ public class MilitarySymbolFactory
         	    	}
         	    	break;
         	    }
-        	    // do something with the data
         	}
         	csvReader.close();
         	
@@ -102,7 +104,7 @@ public class MilitarySymbolFactory
     		String path = resourceManager.getModifierCsvResourcePath(set, modifierType);
     		File f = ResourceManager.getResourceFile(path);
         	BufferedReader csvReader = new BufferedReader(new FileReader(f));
-        	String row = csvReader.readLine(); // Skip the CSV header
+        	String row = csvReader.readLine(); // skip CSV header
         	while ((row = csvReader.readLine()) != null) {
         	    String[] data = row.split(",");
         	    String name = data[0].trim();
