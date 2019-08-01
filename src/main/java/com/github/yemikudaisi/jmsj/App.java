@@ -43,8 +43,7 @@ public class App
     	milSym.setSectorOneModifier(new Modifier("03","03"));
     	milSym.setSectorTwoModifier(new Modifier("04","04"));
     	*/
-    	milSym.setSymbolSet(SymbolSets.LandUnits);
-    	SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(milSym.getSymbolSet());
+    	SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(SymbolSets.LandUnits);
     	System.out.println(h);
     	
     	System.out.println("SIDC: "+milSym);
