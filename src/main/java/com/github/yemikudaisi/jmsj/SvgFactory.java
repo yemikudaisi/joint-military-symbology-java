@@ -40,6 +40,7 @@ public class SvgFactory {
         	//TODO:METOC and Cyberspace has no frame
         	//FIXME: Hard-coded, make more flexible
         	
+        	//TODO: Use land unit of land cicilian, give option for using civilian frame
         	// Symbol Set Frame (Including projected Status)
         	if(milSym.getSymbolSet() != SymbolSets.MeteorologicalAtmospheric &&
         			milSym.getSymbolSet() != SymbolSets.MeteorologicalOceanographic &&

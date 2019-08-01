@@ -14,6 +14,7 @@ import org.apache.batik.swing.JSVGCanvas;
 import org.w3c.dom.svg.SVGDocument;
 
 import com.github.yemikudaisi.jmsj.symbology.SymbolSetEntityModifierTree;
+import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
 
@@ -28,7 +29,7 @@ public class App
     	// Tested against symbols generated from https://sidc.milsymb.net/#/APP6
     	MilitarySymbolFactory.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
     	//MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-0-20-2-4-61-120501-03-01");
-    	MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-10-0-6-16-111000-17-12");
+    	MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-11-0-0-00-110100-00-00");
     	/**milSym.setStandardEntityOne(StandardEntityOnes.Reality);
     	milSym.setStandardEntityTwo(StandardEntityTwos.Friend);
     	milSym.setSymbolSet(SymbolSets.LandUnits);
@@ -42,9 +43,9 @@ public class App
     	milSym.setSectorOneModifier(new Modifier("03","03"));
     	milSym.setSectorTwoModifier(new Modifier("04","04"));
     	*/
-
+    	milSym.setSymbolSet(SymbolSets.LandUnits);
     	SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(milSym.getSymbolSet());
-    	//System.out.println(h);
+    	System.out.println(h);
     	
     	System.out.println("SIDC: "+milSym);
     	showSymbol(milSym);

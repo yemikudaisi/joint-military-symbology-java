@@ -135,7 +135,10 @@ public class ResourceManager {
 
     	
     	// Consider symbols sets that use frames belonging to other symbol sets
-    	
+    	if(c[4]=='1' && c[5]=='1') { // land civilian (SIDC value 11) uses land unit (SIDC value 10)
+    		c[4]='1';
+    		c[5]='0';
+    	}
     	if(c[4]=='5' && c[5]=='0') { // SIGINT Space (SIDC value 50) uses Space (SIDC value 05)
     		c[4]='0';
     		c[5]='5';
