@@ -3,14 +3,14 @@ package com.github.yemikudaisi.jmsj.symbology;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityModifierHeirarchy {
+public class SymbolSetEntityModifierTree {
 	private List<Entity> entities;
 	private SymbolSets set;
 	private List<Modifier> sectorModifierOnes;
 	private List<Modifier> sectorModifierTwos;
 	
 	
-	public EntityModifierHeirarchy(SymbolSets set) {
+	public SymbolSetEntityModifierTree(SymbolSets set) {
 		entities = new ArrayList<Entity>();
 		sectorModifierOnes = new ArrayList<Modifier>();
 		sectorModifierTwos = new ArrayList<Modifier>();

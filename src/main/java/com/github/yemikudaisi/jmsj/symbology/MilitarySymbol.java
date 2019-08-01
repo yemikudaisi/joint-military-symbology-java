@@ -54,7 +54,7 @@ public class MilitarySymbol
         this.setStandardEntityOne(standardEntityOne);
         this.setStandardEntityTwo(standardEntityTwo);
         this.setSymbolSet(symbolSet);
-        this.setStatus(status);
+        this.setStatusAmplifier(status);
         this.setHqTFDummy(hQTFDummy);
         this.setAmplifier(amplifier); 
     }
@@ -75,7 +75,7 @@ public class MilitarySymbol
         this.setStandardEntityOne(standardEntityOne);
         this.setStandardEntityTwo(standardEntityTwo);
         this.setSymbolSet(symbolSet);
-        this.setStatus(status);
+        this.setStatusAmplifier(status);
         this.setHqTFDummy(hQTFDummy);
         this.setAmplifier(amplifier); 
         this.setEntity(entity);
@@ -88,7 +88,7 @@ public class MilitarySymbol
             getStandardEntityOne().getSidcPart() +
             getStandardEntityTwo().getSidcPart() +
             getSymbolSet().getSidcPart() +
-            getStatus().getSidcPart() +
+            getStatusAmplifier().getSidcPart() +
             getHqTFDummy().getSidcPart() +
             getAmplifier().getSidcPart(); 
 	}
@@ -157,11 +157,13 @@ public class MilitarySymbol
 		this.symbolSet = symbolSet;
 	}
 	
-	public Status getStatus() {
+	// TODO: Check is the supplied amplifier is applicable to the symbol set
+	// and log details
+	public Status getStatusAmplifier() {
 		return status;
 	}
 	
-	public void setStatus(Status status) {
+	public void setStatusAmplifier(Status status) {
 		this.status = status;
 	}
 	

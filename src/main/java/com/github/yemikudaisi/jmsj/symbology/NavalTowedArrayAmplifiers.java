@@ -1,16 +1,17 @@
 package com.github.yemikudaisi.jmsj.symbology;
 
-public enum EquipmentMobilityOnSnowAmplifier implements Amplifier {
-		OverSnow("Oversnow(prime mover)","1"),
-	    Sled("2");
+public enum NavalTowedArrayAmplifiers implements Amplifier  {
+    Short("Short towed array","61"),
+    Long("Long towed array","62");
+    
     private String description;
     private String sidcPart;
     
-    EquipmentMobilityOnSnowAmplifier(String sidcPart){
+    NavalTowedArrayAmplifiers (String sidcPart){
     	this(null, sidcPart);
     }
 
-    EquipmentMobilityOnSnowAmplifier(String value, String sidcPart) {
+    NavalTowedArrayAmplifiers (String value, String sidcPart) {
         this.description = value;
         this.sidcPart = sidcPart;
     }
@@ -30,9 +31,10 @@ public enum EquipmentMobilityOnSnowAmplifier implements Amplifier {
     	return super.toString();
     }
 
-    public static EquipmentMobilityOnSnowAmplifier getEnum(String value) {
-        for(EquipmentMobilityOnSnowAmplifier v : values())
+    public static NavalTowedArrayAmplifiers  getEnum(String value) {
+        for(NavalTowedArrayAmplifiers  v : values())
             if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }
+
 }

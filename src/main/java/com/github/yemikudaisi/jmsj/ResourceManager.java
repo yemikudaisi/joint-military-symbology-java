@@ -134,17 +134,19 @@ public class ResourceManager {
     	char[] c = setA.toCharArray();
 
     	
-    	if(c[4]=='5' && c[5]=='0') { // SIGINT Space
+    	// Consider symbols sets that use frames belonging to other symbol sets
+    	
+    	if(c[4]=='5' && c[5]=='0') { // SIGINT Space (SIDC value 50) uses Space (SIDC value 05)
     		c[4]='0';
     		c[5]='5';
     	}
     	
-    	if(c[4]=='5' && c[5]=='1') { // SIGINT Air
+    	if(c[4]=='5' && c[5]=='1') { // SIGINT Air (SIDC value 51) uses Air (SIDC value 01)
     		c[4]='0';
     		c[5]='1';
     	}
     	
-    	if((c[4]=='5' && c[5]=='2') || (c[4]=='5' && c[5]=='3')) { // SIGINT Land/Surface -> Sea Surface
+    	if((c[4]=='5' && c[5]=='2') || (c[4]=='5' && c[5]=='3')) { // SIGINT Land/Surface (SIDC value 23) uses Sea Surface (SIDC value 30)
     		c[4]='3';
     		c[5]='0';
     	}
@@ -199,12 +201,23 @@ public class ResourceManager {
 		if(milSym.getStatusAmplifierMode() == StatusAmplifierModes.Default) {
 			return OCA_SVG_FOLDER+c[6]+".svg";
 		}
-		if(c[3]=='2') {
+		
+		// TODO: refactor this code into a private method
+		
+		// NOTES: Standard Entity 2 (SIDC position 4) of value 2 (Assumed Friend) uses HQTFD SVG symbols for value 3 (Friend) and
+		// Standard Entity 2 (SIDC position 4) of value 5 (Suspect/Joker) uses HQTFD symbols for value 6 (Hostile/Faker)
+		
+		// Consider standard entities with the frame shape  
+		if(c[3]=='0') { // if standard entity value pending (SIDC value 5) use resource for hostile (SIDC value 6)
+			c[3]='1';
+		}		
+		if(c[3]=='2') { // if standard entity value assumed friend (SIDC value 3) use resource for friend (SIDC value 3)
 			c[3]='3';
 		}
-		else if(c[3]=='5') {
+		else if(c[3]=='5') { // if standard entity value suspect (SIDC value 5) use resource for hostile (SIDC value 6)
 			c[3]='6';
 		}
+		
 		return OCA_SVG_FOLDER+c[2]+c[3]+c[4]+c[5]+c[6]+"2.svg";
 		
 	}
@@ -224,15 +237,23 @@ public class ResourceManager {
 	 */
 	protected static String getHqTfDummySvgResourcePath(MilitarySymbol milSym) {
 		char[] c = milSym.getSidcSetA().toCharArray();
+		
+		// TODO: refactor this code into a private method
+		
 		// NOTES: Standard Entity 2 (SIDC position 4) of value 2 (Assumed Friend) uses HQTFD SVG symbols for value 3 (Friend) and
 		// Standard Entity 2 (SIDC position 4) of value 5 (Suspect/Joker) uses HQTFD symbols for value 6 (Hostile/Faker)
-		if(c[3]=='2') {
+		
+		// Consider standard entities with the frame shape  
+		if(c[3]=='0') { // if standard entity value pending (SIDC value 5) use resource for hostile (SIDC value 6)
+			c[3]='1';
+		}		
+		if(c[3]=='2') { // if standard entity value assumed friend (SIDC value 3) use resource for friend (SIDC value 3)
 			c[3]='3';
 		}
-		else if(c[3]=='5') {
+		else if(c[3]=='5') { // if standard entity value suspect (SIDC value 5) use resource for hostile (SIDC value 6)
 			c[3]='6';
 		}
-		
+	
 		return HQTFDUMMY_SVG_FOLDER+c[3]+c[4]+c[5]+c[7]+".svg";
 	}
 	
@@ -253,10 +274,14 @@ public class ResourceManager {
 		char[] c = milSym.getSidcSetA().toCharArray();
 		int i = Integer.parseInt(String.valueOf(c[8]));
 		
-		if(c[3]=='2') {
+		// Consider standard entities with the frame shape  
+		if(c[3]=='0') { // if standard entity value pending (SIDC value 5) use resource for hostile (SIDC value 6)
+			c[3]='1';
+		}		
+		if(c[3]=='2') { // if standard entity value assumed friend (SIDC value 3) use resource for friend (SIDC value 3)
 			c[3]='3';
 		}
-		else if(c[3]=='5') {
+		else if(c[3]=='5') { // if standard entity value suspect (SIDC value 5) use resource for hostile (SIDC value 6)
 			c[3]='6';
 		}
 		
@@ -502,6 +527,7 @@ public class ResourceManager {
 	 */
 	private static Boolean resourceExists(String fileName) {
 		try {
+			@SuppressWarnings("unused")
 			File f = getResourceFile(fileName);
 	    	return true; 
 		} catch(Exception e) {

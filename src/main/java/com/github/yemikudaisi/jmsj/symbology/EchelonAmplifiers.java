@@ -1,7 +1,15 @@
 package com.github.yemikudaisi.jmsj.symbology;
 
-public enum DivisionAboveEchelonAmplifier implements Amplifier {
-    Division("21"),
+public enum EchelonAmplifiers implements Amplifier {
+    Team("Team/Crew","11"),
+    Squad("12"),
+    Section("13"),
+    Platoon("Platoon/Deatachment","14"),
+    Company("Company/Battery/Troop","15"),
+    Battalion("Battalion/Squadron","16"),
+    Regiment("Regiment/Group","17"),
+    Brigade("18"),
+	Division("21"),
     Corp("22"),
     Army("23"),
     ArmyGroup("Army Group/Front","24"),
@@ -11,11 +19,11 @@ public enum DivisionAboveEchelonAmplifier implements Amplifier {
     private String description;
     private String sidcPart;
     
-    DivisionAboveEchelonAmplifier(String sidcPart){
+    EchelonAmplifiers (String sidcPart){
     	this(null, sidcPart);
     }
 
-    DivisionAboveEchelonAmplifier(String value, String sidcPart) {
+    EchelonAmplifiers (String value, String sidcPart) {
         this.description = value;
         this.sidcPart = sidcPart;
     }
@@ -35,8 +43,8 @@ public enum DivisionAboveEchelonAmplifier implements Amplifier {
     	return super.toString();
     }
 
-    public static DivisionAboveEchelonAmplifier getEnum(String value) {
-        for(DivisionAboveEchelonAmplifier v : values())
+    public static EchelonAmplifiers  getEnum(String value) {
+        for(EchelonAmplifiers  v : values())
             if(v.getSidcPart().equalsIgnoreCase(value)) return v;
         throw new IllegalArgumentException();
     }

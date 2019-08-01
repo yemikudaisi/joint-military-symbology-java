@@ -1,10 +1,8 @@
 package com.github.yemikudaisi.jmsj;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,20 +13,9 @@ import javax.swing.JTextField;
 import org.apache.batik.swing.JSVGCanvas;
 import org.w3c.dom.svg.SVGDocument;
 
-import com.github.yemikudaisi.jmsj.symbology.BrigadeBelowEchelonAmplifier;
-import com.github.yemikudaisi.jmsj.symbology.Entity;
-import com.github.yemikudaisi.jmsj.symbology.EntityModifierHeirarchy;
-import com.github.yemikudaisi.jmsj.symbology.EntitySubType;
-import com.github.yemikudaisi.jmsj.symbology.EntityType;
-import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
+import com.github.yemikudaisi.jmsj.symbology.SymbolSetEntityModifierTree;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
-import com.github.yemikudaisi.jmsj.symbology.Modifier;
-import com.github.yemikudaisi.jmsj.symbology.NotApplicableAmplifier;
-import com.github.yemikudaisi.jmsj.symbology.StandardEntityOnes;
-import com.github.yemikudaisi.jmsj.symbology.StandardEntityTwos;
-import com.github.yemikudaisi.jmsj.symbology.Status;
 import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
-import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 /**
  * Hello world!
@@ -38,10 +25,10 @@ public class App
 {
     public static void main( String[] args )
     {
-    	//MilitarySymbol milSym = new MilitarySymbol();
-    	// "10 03 10 0 0 31 130395 03 04"
-    	// "10 03 35 0 0 00 110102 08 00"
-    	MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10 03 35 0 0 00 110102 08 09");
+    	// Tested against symbols generated from https://sidc.milsymb.net/#/APP6
+    	MilitarySymbolFactory.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
+    	//MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-0-20-2-4-61-120501-03-01");
+    	MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-10-0-6-16-111000-17-12");
     	/**milSym.setStandardEntityOne(StandardEntityOnes.Reality);
     	milSym.setStandardEntityTwo(StandardEntityTwos.Friend);
     	milSym.setSymbolSet(SymbolSets.LandUnits);
@@ -56,7 +43,7 @@ public class App
     	milSym.setSectorTwoModifier(new Modifier("04","04"));
     	*/
 
-    	EntityModifierHeirarchy h = MilitarySymbolFactory.getEnityModifierHeirarchyForSymbolSet(milSym.getSymbolSet());
+    	SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(milSym.getSymbolSet());
     	//System.out.println(h);
     	
     	System.out.println("SIDC: "+milSym);
@@ -64,7 +51,7 @@ public class App
     }
     
     public static void showSymbol(MilitarySymbol milSym) {
-        JFrame f = new JFrame("svg");
+        JFrame f = new JFrame("SIDC: "+milSym);
         
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());

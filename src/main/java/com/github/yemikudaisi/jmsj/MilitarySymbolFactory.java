@@ -2,53 +2,46 @@ package com.github.yemikudaisi.jmsj;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.github.yemikudaisi.jmsj.symbology.Amplifier;
-import com.github.yemikudaisi.jmsj.symbology.BrigadeBelowEchelonAmplifier;
-import com.github.yemikudaisi.jmsj.symbology.DivisionAboveEchelonAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.EchelonAmplifiers;
 import com.github.yemikudaisi.jmsj.symbology.Entity;
-import com.github.yemikudaisi.jmsj.symbology.EntityModifierHeirarchy;
 import com.github.yemikudaisi.jmsj.symbology.EntitySubType;
 import com.github.yemikudaisi.jmsj.symbology.EntityType;
-import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityOnLandAmplifier;
-import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityOnSnowAmplifier;
-import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityOnWaterAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityAmplifiers;
 import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.Modifier;
 import com.github.yemikudaisi.jmsj.symbology.ModifierTypes;
-import com.github.yemikudaisi.jmsj.symbology.NavalTowedArrayAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.NavalTowedArrayAmplifiers;
 import com.github.yemikudaisi.jmsj.symbology.NotApplicableAmplifier;
 import com.github.yemikudaisi.jmsj.symbology.StandardEntityOnes;
 import com.github.yemikudaisi.jmsj.symbology.StandardEntityTwos;
 import com.github.yemikudaisi.jmsj.symbology.Status;
 import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
+import com.github.yemikudaisi.jmsj.symbology.SymbolSetEntityModifierTree;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 public class MilitarySymbolFactory
 {
 	static Logger logger = Logger.getLogger(SvgFactory.class.getName());
+	static StatusAmplifierModes amplifierMode = StatusAmplifierModes.Default;
 	
 	public static MilitarySymbol createSymbol(String code) {
 		MilitarySymbol milSym = new MilitarySymbol();
-		String sidc = code.replaceAll(" ", "");
+		milSym.setStatusAmplifierMode(amplifierMode);
+		String sidc = code.replaceAll(" ", "").replaceAll("-", "");
 		
 		milSym.setStandardEntityOne(StandardEntityOnes.getEnum(sidc.substring(2,3)));
     	milSym.setStandardEntityTwo(StandardEntityTwos.getEnum(sidc.substring(3,4)));
     	milSym.setSymbolSet(SymbolSets.getEnum(sidc.substring(4,6)));
     	
-    	milSym.setStatus(Status.getEnum(sidc.substring(6,7)));
+    	milSym.setStatusAmplifier(Status.getEnum(sidc.substring(6,7)));
     	milSym.setHqTFDummy(HQTFDummy.getEnum(sidc.substring(7,8)));
     	milSym.setAmplifier(getAmplifier(sidc.substring(8,10)));
     	
@@ -61,27 +54,28 @@ public class MilitarySymbolFactory
     	return milSym;
 	}
 	
+	public static void setStatusAmplifierMode(StatusAmplifierModes mode) {
+		amplifierMode = mode;
+	}
+	
 	private static Amplifier getAmplifier(String amplifierSidc) {
 		char[] c = amplifierSidc.toCharArray();
 				switch(c[0]) {
 				case '1':
-					return BrigadeBelowEchelonAmplifier.getEnum(amplifierSidc);
 				case '2':
-					return DivisionAboveEchelonAmplifier.getEnum(amplifierSidc);
+					return EchelonAmplifiers.getEnum(amplifierSidc);
 				case '3':
-					return EquipmentMobilityOnLandAmplifier.getEnum(amplifierSidc);
 				case '4':
-					return EquipmentMobilityOnSnowAmplifier.getEnum(amplifierSidc);
 				case '5':
-					return EquipmentMobilityOnWaterAmplifier.getEnum(amplifierSidc);
+					return EquipmentMobilityAmplifiers.getEnum(amplifierSidc);
 				case '6':
-					return NavalTowedArrayAmplifier.getEnum(amplifierSidc);
+					return NavalTowedArrayAmplifiers.getEnum(amplifierSidc);
 				default :
 					return NotApplicableAmplifier.Unspecified;
 				}
 	}
 	
-	public static EntityModifierHeirarchy getEnityModifierHeirarchyForSymbolSet(SymbolSets symbolSet) {
+	public static SymbolSetEntityModifierTree createSymbolSetEntityModifierTree(SymbolSets symbolSet) {
 		ResourceManager resourceManager = new ResourceManager();
 		
     	String entitiesfilePath = resourceManager.getEnitiesCsvResourcePath(symbolSet);
@@ -89,7 +83,7 @@ public class MilitarySymbolFactory
     	String lineEntitiesfilePath = resourceManager.getLineEnitiesCsvResourcePath(symbolSet);
     	String pointEntitiesfilePath = resourceManager.getPointEnitiesCsvResourcePath(symbolSet);
 
-    	EntityModifierHeirarchy h = new EntityModifierHeirarchy(symbolSet);
+    	SymbolSetEntityModifierTree h = new SymbolSetEntityModifierTree(symbolSet);
     	
     	addEntitiesTree(entitiesfilePath, h.getEntities());
     	addEntitiesTree(areaEntitiesfilePath, h.getEntities());
@@ -102,7 +96,7 @@ public class MilitarySymbolFactory
     	return h;
 	}
 	
-    public static void addEntitiesTree(String filePath, List<Entity> enitiesList) {   	
+    private static void addEntitiesTree(String filePath, List<Entity> enitiesList) {   	
 
     	Entity lastEntity = null;
     	EntityType lastEntityType = null;
@@ -171,5 +165,38 @@ public class MilitarySymbolFactory
     		logger.log(Level.INFO, "Unable to build sector modifiers("+modifierType.toString()+") for "+set);
     		return;
     	} 
+    }
+    
+    public static boolean isAmplifierApplicable(MilitarySymbol milSym) {
+    	return isAmplifierApplicable(milSym, milSym.getSymbolSet());
+    }
+    
+    public static boolean isAmplifierApplicable(MilitarySymbol milSym, SymbolSets set) {
+    	Boolean isAmplifierApplicable = false;
+    	for(Amplifier a: MilitarySymbolFactory.getApplicableAmplifiers(set)) {
+    		if (milSym.getAmplifier().getSidcPart().equalsIgnoreCase(a.getSidcPart())) {
+    			if (!(milSym.getAmplifier() instanceof NotApplicableAmplifier))
+    				isAmplifierApplicable = true;
+    			break;
+			}
+    	}
+    	return isAmplifierApplicable;
+    	
+    }
+    // TODO: Mention in documentation
+    public static Amplifier[] getApplicableAmplifiers(SymbolSets symbolSet) {
+    	switch(symbolSet) {
+    	case LandUnits:
+    		return EchelonAmplifiers.values();
+    	case LandEquipment:
+    		return EquipmentMobilityAmplifiers.values();
+    	case SeaSurface:
+    	case SeaSubsurface:
+    		return NavalTowedArrayAmplifiers.values();
+    	default:
+    		// Air, Air Missile, Space, Space missile Land Civilian, Land Installation
+    		// Control measure, Mine warfare, Activities, All SIGINT, All METOC and cyberspace
+    		return NotApplicableAmplifier.values();
+    	}    	
     }
 }

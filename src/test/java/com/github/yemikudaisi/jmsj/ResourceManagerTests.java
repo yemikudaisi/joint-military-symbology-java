@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityOnLandAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityAmplifiers;
 import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
@@ -52,7 +52,7 @@ public class ResourceManagerTests {
 	@Test
 	public void amplifierSVGFileTest() {
 		//Mapping: Amplifier/XXXc.svg => Amplifier/49{10}.svg (SIDC)
-		milSym.setAmplifier(EquipmentMobilityOnLandAmplifier.PackAnimals);
+		milSym.setAmplifier(EquipmentMobilityAmplifiers.PackAnimals);
 		String fileName = ResourceManager.getAmplifierSvgResourcePath(milSym);
 		assertEquals(ResourceManager.AMPLIFIER_SVG_FOLDER+"337.svg",fileName);
 	}

@@ -16,10 +16,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
 
+import com.github.yemikudaisi.jmsj.symbology.Amplifier;
 import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.NotApplicableAmplifier;
 import com.github.yemikudaisi.jmsj.symbology.Status;
+import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 public class SvgFactory {
@@ -71,9 +73,9 @@ public class SvgFactory {
 	    		}
         	}
         	
-        	// Amplifiers, SIDC position 
-        	// Only caters for status damage and broken, frame affecting statuses handled in frame assemble above
-        	if(!(milSym.getAmplifier() instanceof NotApplicableAmplifier) && 
+        	// Echelon/Equipment mobility/ Naval towed array amplifiers, SIDC position
+        			
+        	if(MilitarySymbolFactory.isAmplifierApplicable(milSym) && 
         			milSym.getSymbolSet() != SymbolSets.MeteorologicalAtmospheric&&  // No amplifier for this sym sets
         			milSym.getSymbolSet() != SymbolSets.MeteorologicalOceanographic&& // No amplifier for this sym sets
         			milSym.getSymbolSet() != SymbolSets.MeteorologicalSpace ) { // No amplifier for this sym sets
@@ -92,16 +94,21 @@ public class SvgFactory {
         	}
         	
         	// Status\Operational Condition Amplifier
-        	// Only caters for status damage and broken, frame affecting statuses handled in frame assembled above
-        	if(milSym.getStatus() == Status.PresentDamaged || milSym.getStatus() == Status.PresentDestroyed) {
+        	
+        	// Frame affecting statuses are handled in frame assembly above
+        	if(milSym.getStatusAmplifierMode() == StatusAmplifierModes.Alternate || 		// If the alternate status symbol 
+        			(milSym.getStatusAmplifierMode() == StatusAmplifierModes.Default && 	// Status amplifier mode is default and status is damaged or destroyed
+        				(milSym.getStatusAmplifier() == Status.PresentDamaged || 					// damaged or 
+        				milSym.getStatusAmplifier() == Status.PresentDestroyed))) { 					// destroyed
         		try {
         			String file = App.class.getClassLoader().getResource(ResourceManager.getStatusSvgResourcePath(milSym)).getFile();
         			Document document = f.createDocument(new File(file).toURI().toString());
+        			// FIXME: Alternate status amplifier covering echelon (e.g Naval towed arrays)
         			appendDocument(newSvgDocument, svgRoot, document);
 	        	}catch(Exception e) {
 	    			logger.log(Level.WARNING, "Unable to create Status for "+
 	        	milSym.getSymbolSet()+
-	        	", "+milSym.getStatus()+
+	        	", "+milSym.getStatusAmplifier()+
 	        	", "+ResourceManager.getStatusSvgResourcePath(milSym)
 	        	+".");
 	    		}
