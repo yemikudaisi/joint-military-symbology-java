@@ -2,6 +2,7 @@ package com.github.yemikudaisi.jmsj;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -110,21 +111,42 @@ public class SvgFactory {
 	        	+".");
 	    		}
         	}        	
-
         	
         	// Entities assembly, SIDC position 11-16
         	if(true) {
-	    		try {
-	    			String path = ResourceManager.getEntitySvgResourcePath(milSym);
-	    			String file = App.class.getClassLoader().getResource(path).getFile();
-	            	Document document = f.createDocument(new File(file).toURI().toString());
-	            	appendDocument(newSvgDocument, svgRoot, document);
-	        	}catch(Exception e) {
-	    			logger.log(Level.WARNING, "Unable to create Entity icons for "+
-			        	milSym.getSymbolSet()+
-			        	", "+milSym.getAmplifier()+
-			        	", "+ResourceManager.getAmplifierSvgResourcePath(milSym)
-			        	+".");
+    			List<String> paths = ResourceManager.getEntitySvgResourcePath(milSym);
+	    		for(String path:paths) {
+	    			try {
+		    			String file = App.class.getClassLoader().getResource(path).getFile();
+		            	Document document = f.createDocument(new File(file).toURI().toString());
+		            	appendDocument(newSvgDocument, svgRoot, document);
+		        	}catch(Exception e) {
+		    			logger.log(Level.WARNING, "Unable to create Entity icons for "+
+				        	milSym.getSymbolSet()+
+				        	", "+milSym.getAmplifier()+
+				        	", "+ResourceManager.getAmplifierSvgResourcePath(milSym)
+				        	+".");
+		    			continue;
+		    		}
+	    		}
+        		
+        	}
+        	
+        	// if both modifiers were assigned
+        	if(true) {
+    			List<String> paths = ResourceManager.getModifiersSvgResourcePath(milSym);
+	    		for(String path:paths) {
+	    			try {
+		    			String file = App.class.getClassLoader().getResource(path).getFile();
+		            	Document document = f.createDocument(new File(file).toURI().toString());
+		            	appendDocument(newSvgDocument, svgRoot, document);
+		        	}catch(Exception e) {
+		    			logger.log(Level.WARNING, "Unable to get modifier symbols for "+
+				        	milSym.getSymbolSet()+
+				        	", "+path
+				        	+".");
+		    			continue;
+		    		}
 	    		}
         		
         	}

@@ -14,18 +14,73 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.github.yemikudaisi.jmsj.symbology.Amplifier;
+import com.github.yemikudaisi.jmsj.symbology.BrigadeBelowEchelonAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.DivisionAboveEchelonAmplifier;
 import com.github.yemikudaisi.jmsj.symbology.Entity;
 import com.github.yemikudaisi.jmsj.symbology.EntityModifierHeirarchy;
 import com.github.yemikudaisi.jmsj.symbology.EntitySubType;
 import com.github.yemikudaisi.jmsj.symbology.EntityType;
+import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityOnLandAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityOnSnowAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.EquipmentMobilityOnWaterAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
 import com.github.yemikudaisi.jmsj.symbology.Modifier;
 import com.github.yemikudaisi.jmsj.symbology.ModifierTypes;
+import com.github.yemikudaisi.jmsj.symbology.NavalTowedArrayAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.NotApplicableAmplifier;
+import com.github.yemikudaisi.jmsj.symbology.StandardEntityOnes;
+import com.github.yemikudaisi.jmsj.symbology.StandardEntityTwos;
+import com.github.yemikudaisi.jmsj.symbology.Status;
+import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
 
 public class MilitarySymbolFactory
 {
 	static Logger logger = Logger.getLogger(SvgFactory.class.getName());
+	
+	public static MilitarySymbol createSymbol(String code) {
+		MilitarySymbol milSym = new MilitarySymbol();
+		String sidc = code.replaceAll(" ", "");
+		
+		milSym.setStandardEntityOne(StandardEntityOnes.getEnum(sidc.substring(2,3)));
+    	milSym.setStandardEntityTwo(StandardEntityTwos.getEnum(sidc.substring(3,4)));
+    	milSym.setSymbolSet(SymbolSets.getEnum(sidc.substring(4,6)));
+    	
+    	milSym.setStatus(Status.getEnum(sidc.substring(6,7)));
+    	milSym.setHqTFDummy(HQTFDummy.getEnum(sidc.substring(7,8)));
+    	milSym.setAmplifier(getAmplifier(sidc.substring(8,10)));
+    	
+    	milSym.setEntity(new Entity(sidc.substring(10,12),sidc.substring(10,12)+"0000"));
+    	milSym.setEntityType(new EntityType(sidc.substring(12,14),sidc.substring(10,14)+"00"));
+    	milSym.setEntitySubType(new EntitySubType(sidc.substring(14,16),sidc.substring(10,16)));
+    	
+    	milSym.setSectorOneModifier(new Modifier(sidc.substring(16,18),sidc.substring(16,18)));
+    	milSym.setSectorTwoModifier(new Modifier(sidc.substring(18,20),sidc.substring(18,20)));
+    	return milSym;
+	}
+	
+	private static Amplifier getAmplifier(String amplifierSidc) {
+		char[] c = amplifierSidc.toCharArray();
+				switch(c[0]) {
+				case '1':
+					return BrigadeBelowEchelonAmplifier.getEnum(amplifierSidc);
+				case '2':
+					return DivisionAboveEchelonAmplifier.getEnum(amplifierSidc);
+				case '3':
+					return EquipmentMobilityOnLandAmplifier.getEnum(amplifierSidc);
+				case '4':
+					return EquipmentMobilityOnSnowAmplifier.getEnum(amplifierSidc);
+				case '5':
+					return EquipmentMobilityOnWaterAmplifier.getEnum(amplifierSidc);
+				case '6':
+					return NavalTowedArrayAmplifier.getEnum(amplifierSidc);
+				default :
+					return NotApplicableAmplifier.Unspecified;
+				}
+	}
+	
 	public static EntityModifierHeirarchy getEnityModifierHeirarchyForSymbolSet(SymbolSets symbolSet) {
 		ResourceManager resourceManager = new ResourceManager();
 		

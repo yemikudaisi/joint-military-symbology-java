@@ -30,7 +30,7 @@ public class ResourceManagerTests {
 		//Mapping: X_XXX_Xc.svg => 3_456_7c.svg (SIDC)
 		milSym.setSymbolSet(SymbolSets.LandCivilian);
 		String fileName = ResourceManager.getFrameSvgResourcePath(milSym);
-		assertEquals(ResourceManager.FRAMES_FOLDER+"0_311_0c.svg", fileName);
+		assertEquals(ResourceManager.FRAMES_SVG_FOLDER+"0_311_0c.svg", fileName);
 	}
 	
 	@Test
@@ -38,7 +38,7 @@ public class ResourceManagerTests {
 		//Mapping: X_XXX_Xc.svg => 3_456_7c.svg (SIDC)
 		milSym.setSymbolSet(SymbolSets.LandEquipment);
 		String fileName = ResourceManager.getFrameSvgResourcePath(milSym);
-		assertEquals(ResourceManager.FRAMES_FOLDER+"0_315_0c.svg",fileName);
+		assertEquals(ResourceManager.FRAMES_SVG_FOLDER+"0_315_0c.svg",fileName);
 	}
 	
 	@Test
@@ -46,7 +46,7 @@ public class ResourceManagerTests {
 		//Mapping: X_XXX_Xc.svg => 3_456_7c.svg (SIDC)
 		milSym.setSymbolSet(SymbolSets.LandInstallation);
 		String fileName = ResourceManager.getFrameSvgResourcePath(milSym);
-		assertEquals(ResourceManager.FRAMES_FOLDER+"0_320_0c.svg",fileName);
+		assertEquals(ResourceManager.FRAMES_SVG_FOLDER+"0_320_0c.svg",fileName);
 	}
 	
 	@Test
@@ -54,14 +54,14 @@ public class ResourceManagerTests {
 		//Mapping: Amplifier/XXXc.svg => Amplifier/49{10}.svg (SIDC)
 		milSym.setAmplifier(EquipmentMobilityOnLandAmplifier.PackAnimals);
 		String fileName = ResourceManager.getAmplifierSvgResourcePath(milSym);
-		assertEquals(ResourceManager.AMPLIFIER_FOLDER+"337.svg",fileName);
+		assertEquals(ResourceManager.AMPLIFIER_SVG_FOLDER+"337.svg",fileName);
 	}
 	
 	@Test
 	public void echelonSVGFileTest() {
 		//Mapping: Echelon/XXX.svg => Amplifier/49{10}.svg (SIDC)
 		String fileName = ResourceManager.getAmplifierSvgResourcePath(milSym);
-		assertEquals(ResourceManager.ECHELON_FOLDER+"315.svg",fileName);
+		assertEquals(ResourceManager.ECHELON_SVG_FOLDER+"315.svg",fileName);
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class ResourceManagerTests {
 		//Mapping: Echelon/XXXX.svg => Amplifier/4568.svg (SIDC)
 		milSym.setHqTFDummy(HQTFDummy.FientDummyHeadquarters);
 		String fileName = ResourceManager.getHqTfDummySvgResourcePath(milSym);
-		assertEquals(ResourceManager.HQTFDUMMY_FOLDER+"3103.svg",fileName);		
+		assertEquals(ResourceManager.HQTFDUMMY_SVG_FOLDER+"3103.svg",fileName);		
 	}
 	
 	@Test

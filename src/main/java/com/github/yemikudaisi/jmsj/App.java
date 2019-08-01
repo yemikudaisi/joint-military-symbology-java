@@ -1,6 +1,14 @@
 package com.github.yemikudaisi.jmsj;
 
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.apache.batik.swing.JSVGCanvas;
 import org.w3c.dom.svg.SVGDocument;
@@ -28,8 +36,11 @@ public class App
 {
     public static void main( String[] args )
     {
-    	MilitarySymbol milSym = new MilitarySymbol();
-    	milSym.setStandardEntityOne(StandardEntityOnes.Reality);
+    	//MilitarySymbol milSym = new MilitarySymbol();
+    	// "10 03 10 0 0 31 130395 03 04"
+    	// "10 03 35 0 0 00 110102 08 00"
+    	MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10 03 35 0 0 00 110102 08 09");
+    	/**milSym.setStandardEntityOne(StandardEntityOnes.Reality);
     	milSym.setStandardEntityTwo(StandardEntityTwos.Friend);
     	milSym.setSymbolSet(SymbolSets.LandUnits);
     	milSym.setStatus(Status.Present);
@@ -39,8 +50,9 @@ public class App
     	milSym.setEntity(new Entity("11","130000"));
     	milSym.setEntityType(new EntityType("01","110300"));
     	milSym.setEntitySubType(new EntitySubType("00","010096"));
-    	//milSym.setSectorOneModifer(new Modifier("",""));
-    	//milSym.setSectorTwoModifer("");
+    	milSym.setSectorOneModifier(new Modifier("03","03"));
+    	milSym.setSectorTwoModifier(new Modifier("04","04"));
+    	*/
 
     	EntityModifierHeirarchy h = MilitarySymbolFactory.getEnityModifierHeirarchyForSymbolSet(milSym.getSymbolSet());
     	//System.out.println(h);
@@ -50,11 +62,37 @@ public class App
     }
     
     public static void showSymbol(MilitarySymbol milSym) {
-        JSVGCanvas c = new JSVGCanvas();
-        SVGDocument d = SvgFactory.createSymbolSvg(milSym);
-        c.setSVGDocument(d);
-        
         JFrame f = new JFrame("svg");
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        
+        JSVGCanvas canvas = new JSVGCanvas();
+        SVGDocument d = SvgFactory.createSymbolSvg(milSym);
+        canvas.setSVGDocument(d);
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 3;
+        c.anchor = GridBagConstraints.PAGE_START;
+        panel.add(canvas,c);
+        
+        JTextField sidcTextField = new JTextField();
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 2;
+        panel.add(sidcTextField,c);
+        c.anchor = GridBagConstraints.PAGE_END;
+        
+        JButton showSymbolButton = new JButton("Show symbol");
+        c.gridx = 2;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.anchor = GridBagConstraints.PAGE_END; //bottom of space
+        panel.add(showSymbolButton,c);        
+        
         f.setSize(600, 600);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.getContentPane().add(c);

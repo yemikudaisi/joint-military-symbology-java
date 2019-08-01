@@ -13,8 +13,8 @@ public class MilitarySymbol
 	private Entity entity;
 	private EntityType entityType;
 	private EntitySubType entitySubType;
-	private Modifier sectorOneModifer;
-	private Modifier sectorTwoModifer;
+	private Modifier sectorOneModifier;
+	private Modifier sectorTwoModifier;
 	private StatusAmplifierModes statusAmplifierMode = StatusAmplifierModes.Default;
 	
     public StatusAmplifierModes getStatusAmplifierMode() {
@@ -25,20 +25,20 @@ public class MilitarySymbol
 		this.statusAmplifierMode = statusAmplifierMode;
 	}
 
-	public Modifier getSectorOneModifer() {
-		return sectorOneModifer;
+	public Modifier getSectorOneModifier() {
+		return sectorOneModifier;
 	}
 
-	public void setSectorOneModifer(Modifier sectorOneModifer) {
-		this.sectorOneModifer = sectorOneModifer;
+	public void setSectorOneModifier(Modifier sectorOneModifer) {
+		this.sectorOneModifier = sectorOneModifer;
 	}
 
-	public Modifier getSectorTwoModifer() {
-		return sectorTwoModifer;
+	public Modifier getSectorTwoModifier() {
+		return sectorTwoModifier;
 	}
 
-	public void setSectorTwoModifer(Modifier sectorTwoModifer) {
-		this.sectorTwoModifer = sectorTwoModifer;
+	public void setSectorTwoModifier(Modifier sectorTwoModifer) {
+		this.sectorTwoModifier = sectorTwoModifer;
 	}
 
 	public MilitarySymbol() {
@@ -96,7 +96,9 @@ public class MilitarySymbol
     public String getSidcSetB() {
     	String setB = getEntity().getIdentifier().substring(0,2)+
     			getEntityType().getIdentifier().substring(2,4)+
-    			getEntitySubType().getIdentifier().substring(4,6);
+    			getEntitySubType().getIdentifier().substring(4,6)+
+    			getSectorOneModifier().getIdentifier()+
+    			getSectorTwoModifier().getIdentifier();
     	
     	return setB;
     }
