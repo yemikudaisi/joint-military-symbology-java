@@ -67,7 +67,7 @@ boolean isApplicable = MilitarySymbolFactory.isAmplifierApplicable(SymbolSets.La
 
 ### Enities\Entity types\Entity subtype
 
-The library can generate a Tree of Entites, types, sub types and modifiers for a given symbols set.
+The lis capable of generating a Tree of Entites, types, sub types and modifiers for a given symbols set.
 To access this use:
 ```
 SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(SymbolSets.LandUnits);
