@@ -13,8 +13,8 @@ public class MilitarySymbol
 	private Entity entity;
 	private EntityType entityType;
 	private EntitySubType entitySubType;
-	private Modifier sectorOneModifier;
-	private Modifier sectorTwoModifier;
+	private Modifier sectorOneModifier = new Modifier("00","00");
+	private Modifier sectorTwoModifier = new Modifier("00","00");
 	private StatusAmplifierModes statusAmplifierMode = StatusAmplifierModes.Default;
 	
     public StatusAmplifierModes getStatusAmplifierMode() {

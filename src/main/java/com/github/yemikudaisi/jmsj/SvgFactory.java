@@ -35,11 +35,6 @@ public class SvgFactory {
         	Document newSvgDocument = impl.createDocument(svgNS, "svg", null);
         	Element svgRoot = newSvgDocument.getDocumentElement();
         	
-        	//TODO: Figure out the height and width of the tallest and widest
-
-        	svgRoot.setAttributeNS(null, "width", "1000");
-        	//svgRoot.setAttributeNS(null, "height", "1000");
-        	
         	//TODO:METOC and Cyberspace has no frame
         	//FIXME: Hard-coded, make more flexible
         	
@@ -151,7 +146,17 @@ public class SvgFactory {
         		
         	}
         	
+        	svgRoot.setAttributeNS(null, "width", "612px");
+        	svgRoot.setAttributeNS(null, "height", "792px");
         	return (SVGDocument) newSvgDocument;
+	}
+	
+	private static void compareSize(int maxHeight, int maxWidth, Document document) {
+
+		int h = Integer.parseInt(document.getDocumentElement().getAttribute("height").replace("px", ""));
+		int w = Integer.parseInt(document.getDocumentElement().getAttribute("width").replace("px", ""));
+		maxHeight = Math.max(maxHeight, h);
+		maxWidth = Math.max(maxWidth, w);
 	}
 	
 	private static void appendDocument(Document parent, Node root, Document child) {

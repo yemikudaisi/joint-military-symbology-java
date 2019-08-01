@@ -1,10 +1,12 @@
 package com.github.yemikudaisi.jmsj;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -67,35 +69,38 @@ public class App
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
         
         JSVGCanvas canvas = new JSVGCanvas();
         SVGDocument d = SvgFactory.createSymbolSvg(milSym);
         canvas.setSVGDocument(d);
-        c.weightx = 0.5;
+        canvas.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         c.gridx = 0;
         c.gridy = 0;
+        c.weightx = 1.0;
         c.gridwidth = 3;
         c.anchor = GridBagConstraints.PAGE_START;
+        c.fill = GridBagConstraints.BOTH;
         panel.add(canvas,c);
         
         JTextField sidcTextField = new JTextField();
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
-        panel.add(sidcTextField,c);
+        c.weightx = 0.6;
         c.anchor = GridBagConstraints.PAGE_END;
+        panel.add(sidcTextField,c);
         
         JButton showSymbolButton = new JButton("Show symbol");
         c.gridx = 2;
         c.gridy = 1;
-        c.gridwidth = 1;
-        c.anchor = GridBagConstraints.PAGE_END; //bottom of space
+        c.gridwidth = GridBagConstraints.REMAINDER;
+
+        c.weightx = 0.4;
         panel.add(showSymbolButton,c);        
         
-        f.setSize(600, 600);
+        f.setSize(612, 792);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.getContentPane().add(c);
+        f.getContentPane().add(canvas);
         f.setVisible(true);
     }
 }
