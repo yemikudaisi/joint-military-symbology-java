@@ -61,6 +61,8 @@ public class ResourceManager {
 	}
 	
 	private static void initSymbolSetToAppendicesFolderMapping() {
+		if(ap != null)
+			return;
 		ap = new HashMap<SymbolSets, String>();
 		ap.put(SymbolSets.Air, "Appendices/Air/");
 		ap.put(SymbolSets.AirMissile, "Appendices/Air/");
@@ -307,6 +309,7 @@ public class ResourceManager {
 	 * @return
 	 */
 	protected static List<String> getEntitySvgResourcePath(MilitarySymbol milSym) {
+		initSymbolSetToAppendicesFolderMapping();
 		char[] a = milSym.getSidcSetA().toCharArray();
 		char[] b = milSym.getSidcSetB().toCharArray();
 		List<String> paths = new ArrayList<String>();
@@ -322,9 +325,9 @@ public class ResourceManager {
 			paths.add(entitySubTypePath);
 		}
 		
-		String fileName = SVG_FOLDER+
-				ap.get(milSym.getSymbolSet())+
-				a[4]+a[5]+b[0]+b[1]+b[2]+b[3]+"00";
+		SymbolSets set = milSym.getSymbolSet();
+		String fileMapping = ap.get(set);
+		String fileName = SVG_FOLDER+fileMapping+a[4]+a[5]+b[0]+b[1]+b[2]+b[3]+"00";
 		paths.add(fileName);
 
 		// if the expected symbols are not found, give special consideration as

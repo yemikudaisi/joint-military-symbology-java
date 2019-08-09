@@ -27,9 +27,9 @@ public class App
     public static void main( String[] args )
     {
     	// Tested against symbols generated from https://sidc.milsymb.net/#/APP6
-    	MilitarySymbolFactory.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
+    	MilitarySymbolFactory.setStatusAmplifierMode(StatusAmplifierModes.Default);
     	//MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-0-20-2-4-61-120501-03-01");
-    	MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-11-0-0-00-110100-00-00");
+    	MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-10-0-0-16-120300-00-00");
     	/**milSym.setStandardEntityOne(StandardEntityOnes.Reality);
     	milSym.setStandardEntityTwo(StandardEntityTwos.Friend);
     	milSym.setSymbolSet(SymbolSets.LandUnits);
@@ -43,10 +43,10 @@ public class App
     	milSym.setSectorOneModifier(new Modifier("03","03"));
     	milSym.setSectorTwoModifier(new Modifier("04","04"));
     	*/
-    	SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(SymbolSets.LandUnits);
-    	System.out.println(h);
+    	//SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(SymbolSets.LandUnits);
+    	//System.out.println(h);
     	
-    	System.out.println("SIDC: "+milSym);
+    	//System.out.println("SIDC: "+milSym);
     	showSymbol(milSym);
     }
     
@@ -68,6 +68,7 @@ public class App
         c.anchor = GridBagConstraints.PAGE_START;
         c.fill = GridBagConstraints.BOTH;
         panel.add(canvas,c);
+        panel.setBackground(Color.DARK_GRAY);
         
         JTextField sidcTextField = new JTextField();
         c.gridx = 0;

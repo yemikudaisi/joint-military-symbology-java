@@ -1,13 +1,20 @@
 package com.github.yemikudaisi.jmsj;
 
+import java.awt.Graphics2D;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
+import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.UserAgent;
+import org.apache.batik.bridge.UserAgentAdapter;
+import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
@@ -16,10 +23,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.svg.SVGDocument;
 
-import com.github.yemikudaisi.jmsj.symbology.Amplifier;
 import com.github.yemikudaisi.jmsj.symbology.HQTFDummy;
 import com.github.yemikudaisi.jmsj.symbology.MilitarySymbol;
-import com.github.yemikudaisi.jmsj.symbology.NotApplicableAmplifier;
 import com.github.yemikudaisi.jmsj.symbology.Status;
 import com.github.yemikudaisi.jmsj.symbology.StatusAmplifierModes;
 import com.github.yemikudaisi.jmsj.symbology.SymbolSets;
@@ -28,6 +33,14 @@ public class SvgFactory {
 	static Logger logger = Logger.getLogger(SvgFactory.class.getName());
 	
 	public static SVGDocument createSymbolSvg(MilitarySymbol milSym) {
+		return createSymbolSvg(milSym,612, 792);
+	}
+	
+	public static SVGDocument createSymbolSvg(MilitarySymbol milSym, int percentage) {
+		return createSymbolSvg(milSym,(double)(612*percentage)/100, (double)(792*percentage)/100);
+	}
+	
+	public static SVGDocument createSymbolSvg(MilitarySymbol milSym, double width, double height) {
 			//TODO: Check of amplifiers and HQTFDummy has been set
     		String parser = XMLResourceDescriptor.getXMLParserClassName();
     	    SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
@@ -154,13 +167,14 @@ public class SvgFactory {
         		
         	}
         	
-        	svgRoot.setAttributeNS(null, "width", "612px");
-        	svgRoot.setAttributeNS(null, "height", "792px");
+        	//svgRoot.setAttributeNS(null, "width", width+"px");
+        	//svgRoot.setAttributeNS(null, "height", height+"px");
+        	svgRoot.setAttributeNS(null, "width", "500px");
+        	svgRoot.setAttributeNS(null, "height", "700px");
         	return (SVGDocument) newSvgDocument;
 	}
 	
 	private static void compareSize(int maxHeight, int maxWidth, Document document) {
-
 		int h = Integer.parseInt(document.getDocumentElement().getAttribute("height").replace("px", ""));
 		int w = Integer.parseInt(document.getDocumentElement().getAttribute("width").replace("px", ""));
 		maxHeight = Math.max(maxHeight, h);
@@ -184,6 +198,24 @@ public class SvgFactory {
         		}	
     		}
     	}
+	}
+	
+	public static JSVGCanvas createCanvas(MilitarySymbol milSym) {
+		JSVGCanvas canvas = new JSVGCanvas();
+        SVGDocument d = SvgFactory.createSymbolSvg(milSym);
+        canvas.setSVGDocument(d);
+        return canvas;
+	}
+	
+	public static void test(MilitarySymbol milSym, Graphics2D g2d) {
+		SVGDocument d = SvgFactory.createSymbolSvg(milSym);
+		UserAgent userAgent = new UserAgentAdapter();
+		DocumentLoader loader = new DocumentLoader(userAgent);
+		BridgeContext ctx = new BridgeContext(userAgent, loader);
+		ctx.setDynamicState(BridgeContext.DYNAMIC);
+		GVTBuilder builder = new GVTBuilder();
+		GraphicsNode rootGN = builder.build(ctx, d);
+		rootGN.paint(g2d);
 	}
 	
 }

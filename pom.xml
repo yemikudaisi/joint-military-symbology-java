@@ -11,7 +11,10 @@
   <url>http://maven.apache.org</url>
 
   <properties>
+  	<maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <batik.verson>1.11</batik.verson>
   </properties>
   
   <repositories>
@@ -21,18 +24,23 @@
 	<dependency>
      	<groupId>junit</groupId>
      	<artifactId>junit</artifactId>
-     	<version>3.8.1</version>
+     	<version>4.12</version>
      	<scope>test</scope>
 	</dependency>
 	<dependency>
-    <groupId>org.apache.xmlgraphics</groupId>
-    <artifactId>batik-dom</artifactId>
-    <version>1.11</version>
-</dependency>
+    	<groupId>org.apache.xmlgraphics</groupId>
+    	<artifactId>batik-dom</artifactId>
+    	<version>1.11</version>
+	</dependency>
 	<dependency>
-	<groupId>org.apache.xmlgraphics</groupId>
-	<artifactId>batik-swing</artifactId>
-	<version>1.11</version>
-</dependency>
+		<groupId>org.apache.xmlgraphics</groupId>
+		<artifactId>batik-swing</artifactId>
+		<version>1.11</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.apache.xmlgraphics</groupId>
+    	<artifactId>batik-svggen</artifactId>
+    	<version>1.11</version>
+	</dependency>
   </dependencies>
 </project>
